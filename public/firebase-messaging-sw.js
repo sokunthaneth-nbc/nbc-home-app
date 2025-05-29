@@ -6,8 +6,6 @@ importScripts(
   );
   
   // Initialize the Firebase app in the service worker by passing in
-  // your app's Firebase config object.
-  // https://firebase.google.com/docs/web/setup#config-object
   firebase.initializeApp({
     apiKey: 'AIzaSyBx6qHD0SMEUWB002chHD8gh9Yg6QJ2oj8',
     authDomain: 'test-pwa-f4697.firebaseapp.com',
@@ -17,8 +15,7 @@ importScripts(
     appId: '1:977535000083:web:af1754cd67768b0d3fa9e6',
   });
   
-  // Retrieve an instance of Firebase Messaging so that it can handle background
-  // messages.
+  // Retrieve messages so that it can handle background
   const messaging = firebase.messaging();
   
   messaging.onBackgroundMessage(payload => {

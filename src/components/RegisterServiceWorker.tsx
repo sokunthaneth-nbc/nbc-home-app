@@ -7,7 +7,7 @@ export default function RegisterServiceWorker() {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker
-          .register('/service-worker.js') // or firebase-messaging-sw.js, depends on what you want to register
+          .register('/service-worker.js')
           .then(registration => {
             console.log('Service Worker registered with scope:', registration.scope);
           })
