@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function SplashScreen() {
 	const router = useRouter();
 
-	useEffect(() => {
+useEffect(() => {
 		const timeout = setTimeout(() => {
 			router.push("/login"); // Redirect after 3 seconds
 		}, 3000); // 3 seconds = 3000 milliseconds
