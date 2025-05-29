@@ -7,8 +7,8 @@ import { Eye, EyeOff } from "lucide-react";
 export default function ChangePasswordPage() {
 	const router = useRouter();
 
-	const [newPassword, setNewPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
+	const [newPassword, setNewPassword] = useState("myInitialPassword");
+	const [confirmPassword, setConfirmPassword] = useState("myInitialPassword");
 	const [showPassword, setShowPassword] = useState(false);
 	const [errors, setErrors] = useState<{ newPassword?: string; confirmPassword?: string }>({});
 
