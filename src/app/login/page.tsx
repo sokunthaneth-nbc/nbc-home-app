@@ -2,24 +2,48 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react"; // Make sure to install Lucide
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
 	const router = useRouter();
-	//Static Login
-	const defaultStaffId = "staff01";
+
+	// Static login credentials
+	const defaultStaffId = "2530";
 	const defaultPassword = "123456";
 
-	const [staffId, setStaffId] = useState(defaultStaffId);
-	const [password, setPassword] = useState(defaultPassword);
+	const [staffId, setStaffId] = useState("2530");
+	const [password, setPassword] = useState("123456");
 	const [showPassword, setShowPassword] = useState(false);
+	const [errors, setErrors] = useState<{ staffId?: string; password?: string }>({});
+
+	const validate = () => {
+		const newErrors: { staffId?: string; password?: string } = {};
+
+		if (!staffId.trim()) {
+			newErrors.staffId = "NBC ID is required.";
+		} else if (!/^[a-zA-Z0-9]+$/.test(staffId)) {
+			newErrors.staffId = "NBC ID must be alphanumeric.";
+		}
+
+		if (!password.trim()) {
+			newErrors.password = "Password is required.";
+		} else if (password.length < 6) {
+			newErrors.password = "Password must be at least 6 characters.";
+		}
+
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	};
 
 	const handleLogin = (e: React.FormEvent) => {
 		e.preventDefault();
+
+		if (!validate()) return;
+
 		if (staffId === defaultStaffId && password === defaultPassword) {
-			router.push("/home");
+			router.push("/change-password");
 		} else {
-			alert("Invalid credentials");
+			setErrors({ password: "Invalid NBC ID or password." });
 		}
 	};
 
@@ -36,6 +60,7 @@ export default function LoginPage() {
 				</p>
 
 				<form className="space-y-6 pt-6 pb-32" onSubmit={handleLogin}>
+					{/* Staff ID */}
 					<div>
 						<label htmlFor="staffId" className="block mb-2 text-sm font-normal text-[#040e28]">
 							NBC ID Number <span className="text-red-600">*</span>
@@ -46,12 +71,20 @@ export default function LoginPage() {
 							inputMode="numeric"
 							pattern="\d*"
 							value={staffId}
-							onChange={(e) => setStaffId(e.target.value)}
-							required
-							className="bg-gray-50 border border-gray-300 h-[56px] p-[16px] rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600"
+							onChange={(e) => {
+								const onlyNumbers = e.target.value.replace(/\D/g, "");
+								setStaffId(onlyNumbers);
+							}}
+							className={`bg-gray-50 border ${
+								errors.staffId ? "border-red-500" : "border-gray-300"
+							} h-[56px] p-[16px] rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600`}
 						/>
+						{errors.staffId && (
+							<p className="text-sm text-red-600 mt-1">{errors.staffId}</p>
+						)}
 					</div>
 
+					{/* Password */}
 					<div>
 						<label htmlFor="password" className="block mb-2 text-sm font-normal text-[#040e28]">
 							Password <span className="text-red-600">*</span>
@@ -62,31 +95,34 @@ export default function LoginPage() {
 								id="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								required
-								className="bg-gray-50 border border-gray-300 h-[56px] p-[16px] pr-10 rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600"
+								className={`bg-gray-50 border ${
+									errors.password ? "border-red-500" : "border-gray-300"
+								} h-[56px] p-[16px] pr-10 rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600`}
 							/>
 							<button
 								type="button"
 								onClick={() => setShowPassword(!showPassword)}
-								className="absolute bottom-3 right-3 text-gray-500 hover:text-gray-700"
+								className="absolute bottom-[19px] right-3 text-gray-500 hover:text-gray-700"
 								tabIndex={-1}
 							>
 								{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
 							</button>
 						</div>
+						{errors.password && (
+							<p className="text-sm text-red-600 mt-1">{errors.password}</p>
+						)}
+					</div>
+
+					{/* Submit Button at Bottom */}
+					<div className="fixed bottom-0 left-0 w-full bg-white p-4">
+						<button
+							type="submit"
+							className="w-full text-white bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
+						>
+							Next
+						</button>
 					</div>
 				</form>
-			</div>
-
-			{/* Fixed bottom login button */}
-			<div className="fixed bottom-0 left-0 w-full bg-white p-4 ">
-				<button
-					type="submit"
-					onClick={handleLogin}
-					className="w-full text-white bg-[#0f4aea] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-[32px] text-base px-[8px] py-[16px] text-center"
-				>
-					Next
-				</button>
 			</div>
 		</section>
 	);
