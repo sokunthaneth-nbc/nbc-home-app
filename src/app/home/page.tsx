@@ -52,8 +52,8 @@ export default function DashboardPage() {
 						className="rounded-full"
 					/>
 					<div>
-						<h2 className="text-[16px] font-[400] text-[#001346] leading-normal">Welcome back</h2>
-						<p className="text-[23px] font-[600] text-[#001346]">Tep Vanna</p>
+						<h2 className="text-[16px] font-[400] text-[#001346] leading-normal">សូមស្វាគមន៍</h2>
+						<p className="text-[23px] font-[600] text-[#001346]">ទេព វណ្ណា</p>
 						<p className="text-[13px] font-[400] text-[#001346] leading-normal">{formattedDate}</p>
 					</div>
 				</div>
