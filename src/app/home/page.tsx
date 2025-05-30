@@ -1,3 +1,4 @@
+import FirebaseMessaging from "@/components/FirebaseMessaging";
 import Link from 'next/link';
 import MobileBottomNav from "@/components/MobileBottomNav";
 import { ArrowRight } from 'lucide-react';
@@ -71,7 +72,8 @@ export default function DashboardPage() {
 						</Link>
 					</div>
 				))}
-				</main>
+			</main>
+			<FirebaseMessaging />
 			<MobileBottomNav />
 		</>
 	);

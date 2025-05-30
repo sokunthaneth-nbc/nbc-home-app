@@ -53,3 +53,10 @@ next-env.d.ts
 # Vercel deployment config
 # ========================
 .vercel
+
+# =============================
+# Firebase hosting nbc-home-app
+# =============================
+.firebase
+.firebaserc
+firebase.json
