@@ -2,13 +2,14 @@
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import MobileBottomNav from "@/components/MobileBottomNav";
-import { ChevronRight } from 'lucide-react';
 
 export default function ProfilePage() {
 	const router = useRouter();
-	const [showLangPopup, setShowLangPopup] = useState(false);
+	//const [showLangPopup, setShowLangPopup] = useState(false);
+	const [showLogoutPopup, setShowLogoutPopup] = useState(false);
 	const [animateIn, setAnimateIn] = useState(false);
 
+	//Function Logout
 	const handleLogout = () => {
 		console.log("User logged out");
 		router.push('/login');
@@ -27,20 +28,23 @@ export default function ProfilePage() {
 		{ label: 'ឋាន:', value: '៤' },
 	];
 
-	const openLangPopup = () => {
-		setShowLangPopup(true);
+	//Function Show Logout Popup
+	const openLogoutPopup = () => {
+		setShowLogoutPopup(true);
 		// Delay to ensure component is mounted before applying animation
 		setTimeout(() => setAnimateIn(true), 20);
 	};
-	const closeLangPopup = () => {
+
+	//Function Close Logout Popup
+	const closeLogoutPopup = () => {
 		setAnimateIn(false);
 		// Wait for the animation to finish before unmounting
-		setTimeout(() => setShowLangPopup(false), 500);
+		setTimeout(() => setShowLogoutPopup(false), 500);
 	};
 
 	return (
 		<>
-			<main className=" p-4 pb-24 space-y-4">
+			<main className=" p-4 pb-20 space-y-4">
 				<div className=" max-w-md mx-auto">
 					<h2 className="text-[26px] font-[600] text-[#001346] text-center mb-4">ប្រវត្តិរូប</h2>
 					<p className="text-[#001346] mb-2">
@@ -97,7 +101,7 @@ export default function ProfilePage() {
 				</div>
 
 				{/*Change Language */}
-				{showLangPopup && (
+				{/* {showLangPopup && (
 					<div
 						className={`fixed inset-0 z-50 flex items-end bg-black/40 transition-opacity duration-500 ${
 							animateIn ? "opacity-100" : "opacity-0"
@@ -135,14 +139,55 @@ export default function ProfilePage() {
 							</div>
 						</div>
 					</div>
-				)}
-
+				)} */}
+		
 				<button
-					onClick={handleLogout}
-					className="w-full text-white text-[16px] font-[600px] bg-red-600 h-[40px] hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-[32px] text-base px-4 py-[8px] text-center"
+					onClick={openLogoutPopup}
+					className="w-full text-white text-[16px] font-[600px] bg-[#f24444] h-[40px] hover:bg-[#f24444] focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-[32px] text-base px-4 py-[8px] text-center"
 				>
 					ចេញពីគណនី
 				</button>
+
+				{/*Change Language */}
+				{showLogoutPopup && (
+					<div
+						className={`fixed inset-0 z-50 flex items-end pb-[64px] bg-black/40 transition-opacity duration-500 ${
+							animateIn ? "opacity-100" : "opacity-0"
+						}`}
+					>
+						<div
+							className={`w-full bg-white rounded-t-[16px] p-4 transition-all duration-500 ease-in-out transform ${
+								animateIn ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
+							}`}
+						>
+							<div className="flex justify-center">
+								<img src="/images/logout.png" width={209} height={196} alt="Change Languages" />
+							</div>
+
+							<div className="flex flex-col items-center  w-full">
+								<h2 className="text-[23px] font-[600] text-[#001346] text-center w-full">
+									ចេញពីគណនីនេះ?
+								</h2>
+								<p className="text-[16px] font-[400] text-[#001346] leading-normal text-center w-full mt-2">
+									ពេលចេញពីគណនី អ្នកអាចចូលម្តងទៀតដោយប្រើលេខសម្គាល់ NBC និងពាក្យសម្ងាត់។
+								</p>
+
+								<button onClick={handleLogout}
+									className="w-full mt-[15px] h-[40px] px-[16px] py-[8px] leading-normal text-[16px] font-[600] text-white bg-[#f24444] rounded-[32px] text-center"
+								>
+									ចេញពីគណនី
+								</button>
+
+								<button
+									onClick={closeLogoutPopup}
+									className="w-full mt-[8px] h-[40px] px-[16px] py-[8px] leading-normal text-[16px] font-[600] text-[#001346] bg-[rgba(0,19,70,0.05)] rounded-[32px] text-center"
+								>
+									បោះបង់
+								</button>
+							</div>
+						</div>
+					</div>
+				)}
 			</main>
 			<MobileBottomNav />
 		</>
