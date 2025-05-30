@@ -34,6 +34,18 @@ export default function AttendancePage() {
 			checkIn: '08:15 AM',
 			checkOut: '04:55 PM',
 		},
+		{
+			title: 'Present',
+			date: '2025-05-29',
+			checkIn: '08:15 AM',
+			checkOut: '',
+		},
+		{
+			title: 'Present',
+			date: '2025-05-30',
+			checkIn: '',
+			checkOut: '04:55 PM',
+		},
 	]);
 
   	const [selectedDateInfo, setSelectedDateInfo] = useState<AttendanceEvent[] | null>(null);
@@ -131,9 +143,13 @@ export default function AttendancePage() {
 								{new Date(selectedDateInfo[0].date).toLocaleString('en-US', { weekday: 'short' }).toUpperCase()}
 							</h3>
 							<p className="text-[14px]">
-								{selectedDateInfo.some(e => e.checkIn || e.checkOut)
-								? 'អ្នក​មាន​វត្តមាន​ពេញ​មួយ​ថ្ងៃ​នេះ!'
-								: 'អ្នកអវត្តមាននៅថ្ងៃនេះ!'}
+								{selectedDateInfo.some(e => e.checkIn && e.checkOut)
+									? 'អ្នក​មាន​វត្តមាន​ពេញ​មួយ​ថ្ងៃ​នេះ!' // Full attendance
+									: selectedDateInfo.some(e => e.checkIn && !e.checkOut)
+									? 'អ្នកមិនបានស្កេនចេញនៅថ្ងៃនេះទេ!' // Only check-in
+									: selectedDateInfo.some(e => !e.checkIn && e.checkOut)
+									? 'អ្នកមិនបានស្កេនចូលនៅថ្ងៃនេះទេ!' // Only check-out
+									: 'អ្នកអវត្តមាន​ពេញ​មួយ​ថ្ងៃនេះ!'} {/* Absent */}
 							</p>
 						</div>
 						<table className="min-w-full text-sm text-left text-gray-600">
@@ -144,7 +160,11 @@ export default function AttendancePage() {
 									<tr className='border-b border-[#00134608] h-[56px]'>
 										<td className="w-[96px] py-2 font-semibold text-gray-700">ម៉ោងចូល</td>
 										<td className="w-[4px] px-2">
-											<div className="h-[24px] w-[4px] rounded-[8px] bg-[#34D399]"></div>
+											<div
+												className={`h-[24px] w-[4px] rounded-[8px] ${
+												selectedDateInfo.some(e => e.checkIn) ? 'bg-[#34D399]' : 'bg-[red]'
+												}`}
+											></div>
 										</td>
 										<td className="px-4 py-2 text-center" colSpan={3}>
 											{event.checkIn ? event.checkIn : <span className="italic text-gray-400">--</span>}
@@ -155,7 +175,11 @@ export default function AttendancePage() {
 									<tr className='border-b border-[#00134608]'>
 										<td className="py-2 font-semibold text-gray-700">ម៉ោងចេញ</td>
 										<td className="w-[4px] px-2">
-											<div className="h-[24px] w-[4px] rounded-[8px] bg-[#34D399]"></div>
+											<div
+												className={`h-[24px] w-[4px] rounded-[8px] ${
+												selectedDateInfo.some(e => e.checkOut) ? 'bg-[#34D399]' : 'bg-[red]'
+												}`}
+											></div>
 										</td>
 										<td className="px-4 py-2 text-center" colSpan={3}>
 											{event.checkOut ? event.checkOut : <span className="italic text-gray-400">--</span>}

@@ -50,20 +50,19 @@ export default function LoginPage() {
 	return (
 		<section className="bg-gray-50 min-h-screen flex flex-col justify-between">
 			<div className="w-full bg-white px-6 py-8 flex-1 overflow-auto">
-				<p className="text-base font-normal text-[#040e28]">Welcome to</p>
+				<p className="text-base font-normal text-[#040e28]">សូមស្វាគមន៍មកកាន់</p>
 				<h1 className="text-[26px] my-[15px] font-semibold leading-tight tracking-tight text-[#040e28]">
-					National Bank of Cambodia <br />
-					Application
+					កម្មវិធីធនាគារជាតិនៃកម្ពុជា
 				</h1>
 				<p className="text-base font-normal text-[#040e28]">
-					You can check your attendance, manage your information
+					អ្នកអាចពិនិត្យមើលការចូលរួមរបស់អ្នក គ្រប់គ្រងព័ត៌មានរបស់អ្នក
 				</p>
 
 				<form className="space-y-6 pt-6 pb-32" onSubmit={handleLogin}>
 					{/* Staff ID */}
 					<div>
 						<label htmlFor="staffId" className="block mb-2 text-sm font-normal text-[#040e28]">
-							NBC ID Number <span className="text-red-600">*</span>
+							លេខសម្គាល់ NBC <span className="text-red-600">*</span>
 						</label>
 						<input
 							type="text"
@@ -87,7 +86,7 @@ export default function LoginPage() {
 					{/* Password */}
 					<div>
 						<label htmlFor="password" className="block mb-2 text-sm font-normal text-[#040e28]">
-							Password <span className="text-red-600">*</span>
+							ពាក្យសម្ងាត់ <span className="text-red-600">*</span>
 						</label>
 						<div className="relative">
 							<input
