@@ -17,6 +17,11 @@
 	font-size: 22px;
 	color:#000;
 }
+.fc .fc-toolbar-title{
+	font-size: 26px;
+	font-weight: 600;
+	color: #001346;
+}
 /* Center content in each calendar cell */
 .fc .fc-daygrid-day-frame {
 	display: flex;

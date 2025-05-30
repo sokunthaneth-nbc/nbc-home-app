@@ -43,19 +43,19 @@ export default function ChangePasswordPage() {
 	return (
 		<section className="bg-gray-50 min-h-screen flex flex-col justify-between">
 			<div className="w-full bg-white px-6 py-8 flex-1 overflow-auto">
-				<p className="text-base font-normal text-[#040e28]">Welcome to NBC Staff Application</p>
+				<p className="text-base font-normal text-[#040e28]">សូមស្វាគមន៍</p>
 				<h1 className="text-[26px] my-[15px] font-semibold leading-tight tracking-tight text-[#040e28]">
-					Change your password
+					ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នក
 				</h1>
 				<p className="text-base font-normal text-[#040e28]">
-					Since this is your first time, please create a new password for your account.
+					នេះជាលើកដំបូងរបស់អ្នក សូមបង្កើតពាក្យសម្ងាត់ថ្មីសម្រាប់គណនីរបស់អ្នក
 				</p>
 
 				<form className="space-y-6 pt-6 pb-32" onSubmit={handleChangePassword}>
 					{/* New Password */}
 					<div>
 						<label htmlFor="newPassword" className="block mb-2 text-sm font-normal text-[#040e28]">
-							New Password <span className="text-red-600">*</span>
+							ពាក្យសម្ងាត់ថ្មី <span className="text-red-600">*</span>
 						</label>
 						<div className="relative">
 							<input
@@ -84,7 +84,7 @@ export default function ChangePasswordPage() {
 					{/* Confirm New Password */}
 					<div>
 						<label htmlFor="confirmPassword" className="block mb-2 text-sm font-normal text-[#040e28]">
-							Confirm new password <span className="text-red-600">*</span>
+							បញ្ជាក់ពាក្យសម្ងាត់ថ្មី <span className="text-red-600">*</span>
 						</label>
 						<div className="relative">
 							<input
