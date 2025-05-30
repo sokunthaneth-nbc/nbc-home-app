@@ -1,11 +1,13 @@
 'use client';
-
+import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import MobileBottomNav from "@/components/MobileBottomNav";
 import { ChevronRight } from 'lucide-react';
 
 export default function ProfilePage() {
 	const router = useRouter();
+	const [showLangPopup, setShowLangPopup] = useState(false);
+	const [animateIn, setAnimateIn] = useState(false);
 
 	const handleLogout = () => {
 		console.log("User logged out");
@@ -15,45 +17,56 @@ export default function ProfilePage() {
 
 	//Sample ProfileData
 	const profileData = [
-		{ label: 'Date of birth', value: '11/11/1911' },
-		{ label: 'Phone number', value: '+855 (87) 575 857' },
-		{ label: 'Email', value: 'mishel.matmorsell@nbc.gov.kh' },
-		{ label: 'NBC Staff ID', value: '2659' },
-		{ label: 'Department', value: 'IT' },
-		{ label: 'Position', value: 'Deputy' },
-		{ label: 'ក្របខណ្ឌ', value: '-' },
-		{ label: 'ឋាន:', value: '-' },
+		{ label: 'ថ្ងៃខែឆ្នាំកំណើត', value: '11/11/1911' },
+		{ label: 'លេខទូរស័ព្ទ', value: '+855 (87) 575 857' },
+		{ label: 'អ៊ីមែល', value: 'mishel.matmorsell@nbc.gov.kh' },
+		{ label: 'លេខសម្គាល់ NBC', value: '2659' },
+		{ label: 'នាយកដ្ឋាន', value: 'ពត៏មានវិទ្យា' },
+		{ label: 'មុខតំណែង', value: 'បុគ្គលិក' },
+		{ label: 'ក្របខណ្ឌ', value: 'ខ' },
+		{ label: 'ឋាន:', value: '៤' },
 	];
+
+	const openLangPopup = () => {
+		setShowLangPopup(true);
+		// Delay to ensure component is mounted before applying animation
+		setTimeout(() => setAnimateIn(true), 20);
+	};
+	const closeLangPopup = () => {
+		setAnimateIn(false);
+		// Wait for the animation to finish before unmounting
+		setTimeout(() => setShowLangPopup(false), 500);
+	};
 
 	return (
 		<>
 			<main className=" p-4 pb-24 space-y-4">
 				<div className=" max-w-md mx-auto">
-					<h2 className="text-[26px] font-[600] text-[#001346] text-center mb-4">Profile</h2>
+					<h2 className="text-[26px] font-[600] text-[#001346] text-center mb-4">ប្រវត្តិរូប</h2>
 					<p className="text-[#001346] mb-2">
-						<span className='text-[16px] font-[400] leading-normal'>Hey there</span><br />
-						<span className="italic text-[26px] font-[600]">Tep Vanna</span>
+						<span className='text-[16px] font-[400] leading-normal'>ជំរាបសួរ</span><br />
+						<span className="italic text-[26px] font-[600]">ទេព វណ្ណា</span>
 					</p>
 
 					{/* Your information */}
-					<h2 className="text-[20px] font-[600] text-[#001346] leading-normal mb-2">Your information</h2>
-					<table className="w-full text-sm text-[#001346] divide-y">
+					<h2 className="text-[20px] font-[600] text-[#001346] leading-normal mb-2">ព័ត៌មានរបស់អ្នក</h2>
+					<table className="w-full table-fixed text-sm text-[#001346] divide-y">
 						<tbody>
 							{profileData.map((item, index) => (
 							<tr key={index} className="h-[56px] border-b border-[#00134608]">
-								<td className="text-[16px] font-[600] leading-normal">{item.label}</td>
-								<td className="text-[16px] font-[400] leading-normal text-right">{item.value}</td>
+								<td className="w-[40%] text-[15px] font-[600] leading-normal">{item.label}</td>
+								<td className="text-[15px] font-[400] leading-normal text-right">{item.value}</td>
 							</tr>
 							))}
 						</tbody>
 					</table>
 
 					{/* Account setting */}
-					<h2 className="text-[20px] font-[600] text-[#001346] leading-normal mt-6 mb-2">Account setting</h2>
+					<h2 className="text-[20px] font-[600] text-[#001346] leading-normal mt-6 mb-2">ការកំណត់គណនី</h2>
 					<table className="w-full text-sm text-[#001346] divide-y">
 						<tbody>
 							<tr className="h-[56px] border-b border-[#00134608]">
-								<td className="text-[16px] font-[400] leading-normal">Open app with biometric</td>
+								<td className="text-[16px] font-[400] leading-normal">បើកកម្មវិធីដោយប្រើជីវមាត្រ</td>
 								<td className="text-right">
 									<label className="inline-flex items-center cursor-pointer">
 										<input type="checkbox" value="" className="sr-only peer" />
@@ -61,33 +74,74 @@ export default function ProfilePage() {
 									</label>
 								</td>
 							</tr>
-							<tr className="h-[56px] border-b border-[#00134608]">
+							{/* <tr className="h-[56px] border-b border-[#00134608]">
 								<td className="text-[16px] font-[400] leading-normal">Language</td>
 								<td className="text-[16px] font-[400] leading-normal text-right">
-									<div className="flex items-center justify-end space-x-1">
+									<div className="flex items-center justify-end space-x-1" onClick={openLangPopup}>
 										<span>English</span>
 										<ChevronRight className="w-4 h-4 text-[#001346]" />
 									</div>
 								</td>
-							</tr>
+							</tr> */}
 							<tr className="h-[56px] border-b border-[#00134608]">
-								<td className="text-[16px] font-[400] leading-normal">Switch theme to dark</td>
-								<td className="">
-									<div className="flex justify-end">
-										<ChevronRight className="w-4 h-4 text-[#001346]" />
-									</div>
+								<td className="text-[16px] font-[400] leading-normal">ប្តូរទៅងងឹត</td>
+								<td className="text-right">
+									<label className="inline-flex items-center cursor-pointer">
+										<input type="checkbox" value="" className="sr-only peer" />
+										<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer dark:bg-gray-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 relative"></div>
+									</label>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 
+				{/*Change Language */}
+				{showLangPopup && (
+					<div
+						className={`fixed inset-0 z-50 flex items-end bg-black/40 transition-opacity duration-500 ${
+							animateIn ? "opacity-100" : "opacity-0"
+						}`}
+					>
+						<div
+							className={`w-full bg-white rounded-t-[16px] p-4 transition-all duration-500 ease-in-out transform ${
+								animateIn ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
+							}`}
+						>
+							<div className="flex justify-center">
+								<img src="/images/change-lang.png" width={209} height={196} alt="Change Languages" />
+							</div>
+
+							<div className="flex flex-col items-center mt-2 mb-2 w-full">
+								<h2 className="text-[23px] font-[600] text-[#001346] text-center w-full">
+									ប្តូរភាសាទៅជាខ្មែរ?
+								</h2>
+								<p className="text-[16px] font-[400] text-[#001346] leading-normal text-center w-full mt-2">
+									អ្នកអាចលុបចោលការប្តូរទៅជាភាសាខ្មែរឥឡូវនេះ ប្រសិនបើមិនចង់ អ្នកអាចលុបចោលបាន
+								</p>
+
+								<button
+									className="w-full mt-[15px] h-[48px] text-[16px] font-[600] text-white bg-[#0f4aea] rounded-[32px] text-center"
+								>
+									ប្តូរភាសាទៅជាខ្មែរ
+								</button>
+
+								<button
+									onClick={closeLangPopup}
+									className="w-full mt-[15px] h-[48px] text-[16px] font-[600] text-[#001346] bg-[rgba(0,19,70,0.05)] rounded-[32px] text-center"
+								>
+									បោះបង់
+								</button>
+							</div>
+						</div>
+					</div>
+				)}
+
 				<button
 					onClick={handleLogout}
-					//className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-					className="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
+					className="w-full text-white text-[16px] font-[600px] bg-red-600 h-[40px] hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-[32px] text-base px-4 py-[8px] text-center"
 				>
-					Logout
+					ចេញពីគណនី
 				</button>
 			</main>
 			<MobileBottomNav />
