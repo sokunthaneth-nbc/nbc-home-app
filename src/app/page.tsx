@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function SplashScreen() {
 	const router = useRouter();
 
-useEffect(() => {
+	useEffect(() => {
 		const timeout = setTimeout(() => {
 			router.push("/login"); // Redirect after 3 seconds
 		}, 3000); // 3 seconds = 3000 milliseconds
@@ -18,7 +18,7 @@ useEffect(() => {
 		<section className="min-h-screen flex flex-col justify-center items-center relative bg-[#1c3b63]">
 			{/* Centered Image */}
 			<img
-				src="/images/nbc-logo.png" // Replace this path with your actual image path
+				src="/images/nbc-logo.png"
 				alt="App Logo"
 				className="w-32 h-32 object-contain mb-[20px]"
 			/>
