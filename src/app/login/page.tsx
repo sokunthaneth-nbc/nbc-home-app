@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
+import RegisterBiometric from "@/components/RegisterBiometric";
+import LoginBiometric from "@/components/VerifyBiometric";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -123,6 +125,8 @@ export default function LoginPage() {
 						</button>
 					</div>
 				</form>
+				<RegisterBiometric/>
+				<LoginBiometric/>
 			</div>
 		</section>
 	);
