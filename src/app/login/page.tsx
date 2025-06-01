@@ -1,3 +1,4 @@
+// components/LoginPage.tsx
 "use client";
 
 import { useState } from "react";
@@ -7,7 +8,6 @@ import { Eye, EyeOff } from "lucide-react";
 export default function LoginPage() {
 	const router = useRouter();
 
-	// Static login credentials
 	const defaultStaffId = "2530";
 	const defaultPassword = "123456";
 
@@ -48,20 +48,20 @@ export default function LoginPage() {
 	};
 
 	return (
-		<section className="bg-gray-50 min-h-screen flex flex-col justify-between">
-			<div className="w-full bg-white px-6 py-8 flex-1 overflow-auto">
-				<p className="text-base font-normal text-[#040e28]">សូមស្វាគមន៍មកកាន់</p>
-				<h1 className="text-[26px] my-[15px] font-semibold leading-tight tracking-tight text-[#040e28]">
+		<section className="bg-white dark:bg-[#001346] min-h-screen flex flex-col justify-between">
+			<div className="w-full  px-6 py-8 flex-1 overflow-auto">
+				<p className="text-base font-normal text-[#040e28] dark:text-white">សូមស្វាគមន៍មកកាន់</p>
+				<h1 className="text-[26px] my-[15px] font-semibold leading-tight tracking-tight text-[#040e28] dark:text-white">
 					កម្មវិធីធនាគារជាតិនៃកម្ពុជា
 				</h1>
-				<p className="text-base font-normal text-[#040e28]">
+				<p className="text-base font-normal text-[#040e28] dark:text-white">
 					អ្នកអាចពិនិត្យមើលការចូលរួមរបស់អ្នក គ្រប់គ្រងព័ត៌មានរបស់អ្នក
 				</p>
 
 				<form className="space-y-6 pt-6 pb-32" onSubmit={handleLogin}>
 					{/* Staff ID */}
 					<div>
-						<label htmlFor="staffId" className="block mb-2 text-sm font-normal text-[#040e28]">
+						<label htmlFor="staffId" className="block mb-2 text-sm font-normal text-[#040e28] dark:text-white">
 							លេខសម្គាល់ NBC <span className="text-red-600">*</span>
 						</label>
 						<input
@@ -74,8 +74,8 @@ export default function LoginPage() {
 								const onlyNumbers = e.target.value.replace(/\D/g, "");
 								setStaffId(onlyNumbers);
 							}}
-							className={`bg-gray-50 border ${
-								errors.staffId ? "border-red-500" : "border-gray-300"
+							className={`bg-white dark:bg-white text-gray-900 dark:text-[#001346] border ${
+								errors.staffId ? "border-red-500" : "border-gray-300 dark:border-gray-600"
 							} h-[56px] p-[16px] rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600`}
 						/>
 						{errors.staffId && (
@@ -85,7 +85,7 @@ export default function LoginPage() {
 
 					{/* Password */}
 					<div>
-						<label htmlFor="password" className="block mb-2 text-sm font-normal text-[#040e28]">
+						<label htmlFor="password" className="block mb-2 text-sm font-normal text-[#040e28] dark:text-white">
 							ពាក្យសម្ងាត់ <span className="text-red-600">*</span>
 						</label>
 						<div className="relative">
@@ -94,14 +94,14 @@ export default function LoginPage() {
 								id="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								className={`bg-gray-50 border ${
-									errors.password ? "border-red-500" : "border-gray-300"
+								className={`bg-white dark:white text-gray-900 dark:text-[#001346] border ${
+									errors.password ? "border-red-500" : "border-gray-300 dark:border-gray-600"
 								} h-[56px] p-[16px] pr-10 rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600`}
 							/>
 							<button
 								type="button"
 								onClick={() => setShowPassword(!showPassword)}
-								className="absolute bottom-[19px] right-3 text-gray-500 hover:text-gray-700"
+								className="absolute bottom-[19px] right-3 text-gray-500  hover:text-gray-700 dark:text-[#001346] dark:hover:text-white"
 								tabIndex={-1}
 							>
 								{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -112,11 +112,11 @@ export default function LoginPage() {
 						)}
 					</div>
 
-					{/* Submit Button at Bottom */}
-					<div className="fixed bottom-0 left-0 w-full bg-white p-4">
+					{/* Submit Button */}
+					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4 border-t border-gray-200 dark:border-gray-700">
 						<button
 							type="submit"
-							className="w-full text-white bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
+							className="w-full text-white dark:bg-white dark:text-[#001346] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
 						>
 							Next
 						</button>

@@ -80,7 +80,7 @@ export default function AttendancePage() {
 
   	return (
     	<>
-		<div className="relative min-h-screen bg-white pb-24">
+		<div className="relative  bg-white dark:bg-[#001346] pb-24">
 			<div className="p-6">
 				<div className="calendar-container overflow-y-auto max-h-[calc(100vh-6rem)]">
 					<FullCalendar
@@ -136,7 +136,7 @@ export default function AttendancePage() {
 
 				{/* Attendance Detail Section */}
 				{selectedDateInfo?.[0]?.date && (
-					<div className=" bg-[#00134608] pt-2 px-4 absolute w-full left-0 h-full">
+					<div className=" bg-[#00134608] pt-2 px-4 absolute w-full left-0">
 						<div className="flex justify-between items-center">
 							<h3 className="text-[16px]">
 								<span className="font-semibold text-[26px]">{new Date(selectedDateInfo[0].date).getDate()}</span>{' '}
@@ -157,8 +157,8 @@ export default function AttendancePage() {
 								{selectedDateInfo.map((event, index) => (
 								<Fragment key={index}>
 									{/* Check-in row */}
-									<tr className='border-b border-[#00134608] h-[56px]'>
-										<td className="w-[96px] py-2 font-semibold text-gray-700">ម៉ោងចូល</td>
+									<tr className='border-b border-[#00134608] dark:border-white h-[56px]'>
+										<td className="w-[96px] py-2 font-semibold text-[#001346] dark:text-white">ម៉ោងចូល</td>
 										<td className="w-[4px] px-2">
 											<div
 												className={`h-[24px] w-[4px] rounded-[8px] ${
@@ -166,14 +166,14 @@ export default function AttendancePage() {
 												}`}
 											></div>
 										</td>
-										<td className="px-4 py-2 text-center" colSpan={3}>
-											{event.checkIn ? event.checkIn : <span className="italic text-gray-400">--</span>}
+										<td className="px-4 py-2 text-center text-[#001346] dark:text-white" colSpan={3}>
+											{event.checkIn ? event.checkIn : <span className="italic text-[#001346] dark:text-white">--</span>}
 										</td>
 									</tr>
 									
 									{/* Check-out row */}
-									<tr className='border-b border-[#00134608]'>
-										<td className="py-2 font-semibold text-gray-700">ម៉ោងចេញ</td>
+									<tr className='border-b border-[#00134608] dark:border-white'>
+										<td className="py-2 font-semibold text-[#001346] dark:text-white">ម៉ោងចេញ</td>
 										<td className="w-[4px] px-2">
 											<div
 												className={`h-[24px] w-[4px] rounded-[8px] ${
@@ -181,8 +181,8 @@ export default function AttendancePage() {
 												}`}
 											></div>
 										</td>
-										<td className="px-4 py-2 text-center" colSpan={3}>
-											{event.checkOut ? event.checkOut : <span className="italic text-gray-400">--</span>}
+										<td className="px-4 py-2 text-center text-[#001346] dark:text-white" colSpan={3}>
+											{event.checkOut ? event.checkOut : <span className="italic  text-[#001346] dark:text-white">--</span>}
 										</td>
 									</tr>
 
