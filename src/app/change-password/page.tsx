@@ -9,22 +9,23 @@ export default function ChangePasswordPage() {
 
 	const [newPassword, setNewPassword] = useState("myInitialPassword");
 	const [confirmPassword, setConfirmPassword] = useState("myInitialPassword");
-	const [showPassword, setShowPassword] = useState(false);
+	const [showNewPassword, setShowNewPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [errors, setErrors] = useState<{ newPassword?: string; confirmPassword?: string }>({});
 
 	const validate = () => {
 		const newErrors: { newPassword?: string; confirmPassword?: string } = {};
 
 		if (!newPassword.trim()) {
-			newErrors.newPassword = "New password is required.";
+			newErrors.newPassword = "សូមបញ្ចូលលេខសម្ងាត់";
 		} else if (newPassword.length < 6) {
-			newErrors.newPassword = "Password must be at least 6 characters.";
+			newErrors.newPassword = "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ ៦ តួអក្សរ";
 		}
 
 		if (!confirmPassword.trim()) {
-			newErrors.confirmPassword = "Confirm password is required.";
+			newErrors.confirmPassword = "សូមបញ្ចូលលេខសម្ងាត់ ម្តងទៀត";
 		} else if (confirmPassword !== newPassword) {
-			newErrors.confirmPassword = "Passwords do not match.";
+			newErrors.confirmPassword = "ពាក្យសម្ងាត់មិនត្រូវគ្នាទេ";
 		}
 
 		setErrors(newErrors);
@@ -39,7 +40,7 @@ export default function ChangePasswordPage() {
 
 	return (
 		<section className="bg-white dark:bg-[#001346] min-h-screen flex flex-col justify-between">
-			<div className="w-full  px-6 py-8 flex-1 overflow-auto">
+			<div className="w-full px-6 py-8 flex-1 overflow-auto">
 				<p className="text-base font-normal text-[#040e28] dark:text-white">សូមស្វាគមន៍</p>
 				<h1 className="text-[26px] my-[15px] font-semibold leading-tight tracking-tight text-[#040e28] dark:text-white">
 					ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នក
@@ -56,7 +57,7 @@ export default function ChangePasswordPage() {
 						</label>
 						<div className="relative">
 							<input
-								type={showPassword ? "text" : "password"}
+								type={showNewPassword ? "text" : "password"}
 								id="newPassword"
 								value={newPassword}
 								onChange={(e) => setNewPassword(e.target.value)}
@@ -66,11 +67,12 @@ export default function ChangePasswordPage() {
 							/>
 							<button
 								type="button"
-								onClick={() => setShowPassword(!showPassword)}
+								onClick={() => setShowNewPassword((prev) => !prev)}
 								className="absolute bottom-[19px] right-3 text-gray-500 dark:text-[#001346] hover:text-gray-700 dark:hover:text-white"
 								tabIndex={-1}
+								aria-label="Toggle new password visibility"
 							>
-								{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+								{showNewPassword ? <EyeOff size={20} /> : <Eye size={20} />}
 							</button>
 						</div>
 						{errors.newPassword && (
@@ -85,7 +87,7 @@ export default function ChangePasswordPage() {
 						</label>
 						<div className="relative">
 							<input
-								type={showPassword ? "text" : "password"}
+								type={showConfirmPassword ? "text" : "password"}
 								id="confirmPassword"
 								value={confirmPassword}
 								onChange={(e) => setConfirmPassword(e.target.value)}
@@ -95,11 +97,12 @@ export default function ChangePasswordPage() {
 							/>
 							<button
 								type="button"
-								onClick={() => setShowPassword(!showPassword)}
+								onClick={() => setShowConfirmPassword((prev) => !prev)}
 								className="absolute bottom-[19px] right-3 text-gray-500 dark:text-[#001346] hover:text-gray-700 dark:hover:text-white"
 								tabIndex={-1}
+								aria-label="Toggle confirm password visibility"
 							>
-								{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+								{showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
 							</button>
 						</div>
 						{errors.confirmPassword && (
@@ -107,7 +110,7 @@ export default function ChangePasswordPage() {
 						)}
 					</div>
 
-					{/* Submit Button at Bottom */}
+					{/* Submit Button */}
 					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4 border-t border-gray-200 dark:border-gray-700">
 						<button
 							type="submit"
