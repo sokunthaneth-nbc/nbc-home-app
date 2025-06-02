@@ -57,6 +57,7 @@ next-env.d.ts
 # =============================
 # Firebase hosting nbc-home-app
 # =============================
+.out
 .firebase
 .firebaserc
 firebase.json

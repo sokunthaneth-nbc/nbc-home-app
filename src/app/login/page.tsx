@@ -4,6 +4,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
+import RegisterBiometric from "@/components/RegisterBiometric";
+import LoginBiometric from "@/components/VerifyBiometric";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -130,8 +132,11 @@ export default function LoginPage() {
 						)}
 					</div>
 
-					{/* Submit Button */}
-					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4 border-t border-gray-200 dark:border-gray-700">
+					
+					<RegisterBiometric/>
+					<LoginBiometric/>
+					{/* Submit Button at Bottom */}
+					<div className="fixed bottom-0 left-0 w-full bg-white p-4">
 						<button
 							type="submit"
 							className="w-full text-white dark:bg-white dark:text-[#001346] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
@@ -140,6 +145,7 @@ export default function LoginPage() {
 						</button>
 					</div>
 				</form>
+				
 			</div>
 		</section>
 	);
