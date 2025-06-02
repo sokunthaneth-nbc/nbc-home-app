@@ -8,7 +8,11 @@ module.exports = {
 	  "./node_modules/flowbite-react/**/*.js", // ✅ Add this if you use Flowbite React
 	],
 	theme: {
-	  extend: {},
+		extend: {
+			fontFamily: {
+				sans: ['var(--font-kantumruy)', 'sans-serif'],
+			},
+		},
 	},
 	plugins: [],
   };  

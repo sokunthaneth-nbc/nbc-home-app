@@ -1,20 +1,15 @@
 // src/app/layout.tsx
-
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "@/styles/globals.css";
 import { ToastProvider } from "@/components/ToastProvider";
 import RegisterServiceWorker from "@/components/RegisterServiceWorker";
 import { ThemeProvider } from 'next-themes';
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
+const kantumruyPro = localFont({
+	src: "../../public/fonts/KantumruyPro-Regular.ttf",
+	variable: "--font-kantumruy",
+	display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -34,9 +29,7 @@ export default function RootLayout({
 			<head>
 				<link rel="manifest" href="/manifest.json" />
 			</head>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
+			<body className={`${kantumruyPro.variable} antialiased`} >
 				<ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
 					<RegisterServiceWorker />
 						{children}
