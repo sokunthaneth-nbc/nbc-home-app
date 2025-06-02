@@ -1,15 +1,48 @@
 {
-    "name": "NBC HOME PWA",
-    "short_name": "NBC Home",
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#000000",
-    "icons": [
-      {
-        "src": "/images/icon-512x512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ]
-  }
+  "name": "NBC Home App",
+  "short_name": "NBC Home App",
+  "start_url": "/",
+  "id": "NBCHomeApp",
+  "display": "standalone",
+  "description": "NBCHomeApp is the internal app for NBC employees",
+  "icons": [
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "images/nbc-logo.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "images/nbc-logo.png",
+      "type": "image/png"
+    },
+    {
+      "src": "images/nbc-logo.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "images/screenshot1.jpg",
+      "type": "image/jpg",
+      "sizes": "1080x1920",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "images/screenshot2.jpg",
+      "type": "image/jpg",
+      "sizes": "1080x1920",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "images/screenshot3.jpg",
+      "type": "image/jpg",
+      "sizes": "1080x1920",
+      "form_factor": "narrow"
+    }
+  ],
+  "display_override": ["fullscreen", "window-controls-overlay"]
+}

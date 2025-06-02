@@ -30,3 +30,23 @@ docker tag nbc-home-app sokunthaneth/nbc-home-app:latest
 
 docker push sokunthaneth/nbc-home-app
 ```
+
+## Build Android App from PWA
+
+```
+npm i -g @bubblewrap/cli
+
+cd apk_build
+
+bubblewrap init --manifest=https://<pwa_hosting_url>/manifest.json
+
+bubblewrap build
+```
+
+## Build iOS App from PWA
+
+```
+paste <pwa_hosting_url> to https://www.pwabuilder.com/
+
+generate package as iOS app!
+```
