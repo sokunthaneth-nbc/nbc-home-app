@@ -20,9 +20,7 @@ export default function ProfilePage() {
 		{ label: 'អ៊ីមែល', value: 'mishel.matmorsell@nbc.gov.kh' },
 		{ label: 'លេខសម្គាល់ NBC', value: '2659' },
 		{ label: 'នាយកដ្ឋាន', value: 'ពត៏មានវិទ្យា' },
-		{ label: 'មុខតំណែង', value: 'បុគ្គលិក' },
-		{ label: 'ក្របខណ្ឌ', value: 'ខ' },
-		{ label: 'ឋាន:', value: '៤' },
+		{ label: 'មុខតំណែង', value: 'បុគ្គលិក' }
 	];
 
 	const openLogoutPopup = () => {
