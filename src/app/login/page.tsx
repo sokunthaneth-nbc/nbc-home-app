@@ -16,34 +16,52 @@ export default function LoginPage() {
 	const [showPassword, setShowPassword] = useState(false);
 	const [errors, setErrors] = useState<{ staffId?: string; password?: string }>({});
 
+	//Function Validate
 	const validate = () => {
 		const newErrors: { staffId?: string; password?: string } = {};
 
 		if (!staffId.trim()) {
-			newErrors.staffId = "NBC ID is required.";
+			newErrors.staffId = "សូមបញ្ចូលលេខសម្គាល់ NBC";
 		} else if (!/^[a-zA-Z0-9]+$/.test(staffId)) {
-			newErrors.staffId = "NBC ID must be alphanumeric.";
+			newErrors.staffId = "លេខសម្គាល់ NBC តំរូវជា លេខ";
+		} else if (staffId.length !== 4) {
+			newErrors.staffId = "លេខសម្គាល់ NBC ត្រូវមាន ៤ តួអក្សរ";
 		}
 
 		if (!password.trim()) {
-			newErrors.password = "Password is required.";
+			newErrors.password = "សូមបញ្ចូលលេខសម្ងាត់";
 		} else if (password.length < 6) {
-			newErrors.password = "Password must be at least 6 characters.";
+			newErrors.password = "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ ៦ តួអក្សរ";
 		}
 
 		setErrors(newErrors);
 		return Object.keys(newErrors).length === 0;
 	};
 
+	//Function Login
 	const handleLogin = (e: React.FormEvent) => {
 		e.preventDefault();
 
 		if (!validate()) return;
 
-		if (staffId === defaultStaffId && password === defaultPassword) {
+		const isStaffIdCorrect = staffId === defaultStaffId;
+		const isPasswordCorrect = password === defaultPassword;
+
+		if (isStaffIdCorrect && isPasswordCorrect) {
 			router.push("/change-password");
 		} else {
-			setErrors({ password: "Invalid NBC ID or password." });
+			const newErrors: { staffId?: string; password?: string } = {};
+
+			if (!isStaffIdCorrect && !isPasswordCorrect) {
+				newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // both wrong
+				newErrors.password = "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ";
+			} else if (!isStaffIdCorrect) {
+				newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // wrong ID only
+			} else if (!isPasswordCorrect) {
+				newErrors.password = "អ្នកបានបញ្ចូលពាក្យសម្ងាត់ខុស"; // wrong password only
+			}
+
+			setErrors(newErrors); // only one setErrors call
 		}
 	};
 
@@ -64,7 +82,7 @@ export default function LoginPage() {
 						<label htmlFor="staffId" className="block mb-2 text-sm font-normal text-[#040e28] dark:text-white">
 							លេខសម្គាល់ NBC <span className="text-red-600">*</span>
 						</label>
-						<input
+						<input autoComplete="off"
 							type="text"
 							id="staffId"
 							inputMode="numeric"
@@ -89,7 +107,7 @@ export default function LoginPage() {
 							ពាក្យសម្ងាត់ <span className="text-red-600">*</span>
 						</label>
 						<div className="relative">
-							<input
+							<input autoComplete="off"
 								type={showPassword ? "text" : "password"}
 								id="password"
 								value={password}
