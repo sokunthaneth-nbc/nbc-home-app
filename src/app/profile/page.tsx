@@ -118,7 +118,7 @@ export default function ProfilePage() {
 
 								<button
 									onClick={closeLogoutPopup}
-									className="w-full mt-[8px] h-[40px] px-[16px] py-[8px] leading-normal text-[16px] font-[600] text-[#001346] dark:text-white bg-[rgba(0,19,70,0.05)] dark:bg-gray-700 rounded-[32px] text-center"
+									className="w-full mt-[8px] h-[40px] px-[16px] py-[8px] leading-normal text-[16px] font-[600] text-[#001346] dark:text-[#001346] bg-[rgba(0,19,70,0.05)] dark:bg-gray-700 rounded-[32px] text-center"
 								>
 									បោះបង់
 								</button>

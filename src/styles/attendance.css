@@ -105,3 +105,14 @@
 .fc .fc-col-header{
 	background-color: transparent !important;
 }
+
+.fc-daygrid-day[data-date]:not([data-date^=""]) {
+  pointer-events: auto;
+}
+.fc-daygrid-day.future-date {
+  pointer-events: none;
+  opacity: 0.4;
+}
+.fc .fc-button-primary:focus {
+    box-shadow: none;
+}

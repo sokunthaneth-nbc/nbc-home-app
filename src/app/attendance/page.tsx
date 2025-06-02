@@ -90,9 +90,9 @@ export default function AttendancePage() {
 						events={attendanceData}
 						contentHeight="auto"
 						headerToolbar={{
-							left: '',
+							left: 'prev',
 							center: 'title',
-							right: '',
+							right: 'today',
 						}}
 						titleFormat={(arg) => {
 							const currentYear = new Date().getFullYear();
