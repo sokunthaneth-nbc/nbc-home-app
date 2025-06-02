@@ -1,4 +1,3 @@
-// utils/usePasskey.ts
 export const defaultUser = {
     id: "1234",
     name: "user@example.com",
@@ -24,9 +23,17 @@ export const defaultUser = {
         name: user.name,
         displayName: user.displayName,
       },
-      pubKeyCredParams: [{ type: 'public-key', alg: -7 }],
+      pubKeyCredParams: [
+        { type: "public-key", alg: -7 }, // ES256
+        { type: "public-key", alg: -257 }, // RS256
+      ],
       timeout: 60000,
-      attestation: 'direct',
+      authenticatorSelection: {
+        authenticatorAttachment: "platform",
+        residentKey: "required",
+        userVerification: "preferred",
+      },
+      attestation: "none",
     };
   
     try {

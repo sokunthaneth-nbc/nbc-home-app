@@ -5,9 +5,10 @@ export async function verifyPasskey() {
     const challenge = new Uint8Array([1, 2, 3, 4]); // mock up response
 
   const publicKeyRequestOptions: PublicKeyCredentialRequestOptions = {
-    challenge,
+    challenge, // From your server, base64url decoded to Uint8Array
     timeout: 60000,
-    userVerification: 'preferred',
+    userVerification: "preferred",
+    allowCredentials: [],
   };
 
   try {

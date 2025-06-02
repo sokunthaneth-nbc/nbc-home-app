@@ -115,6 +115,9 @@ export default function LoginPage() {
 						)}
 					</div>
 
+					<RegisterBiometric/>
+					<LoginBiometric/>
+
 					{/* Submit Button at Bottom */}
 					<div className="fixed bottom-0 left-0 w-full bg-white p-4">
 						<button
@@ -125,8 +128,7 @@ export default function LoginPage() {
 						</button>
 					</div>
 				</form>
-				<RegisterBiometric/>
-				<LoginBiometric/>
+				
 			</div>
 		</section>
 	);
