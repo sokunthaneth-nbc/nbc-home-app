@@ -28,6 +28,8 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<head>
 				<link rel="manifest" href="/manifest.json" />
+				<meta name="theme-color" content="#ffffff" />
+				<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 			</head>
 			<body className={`${kantumruyPro.variable} antialiased`} >
 				<ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
