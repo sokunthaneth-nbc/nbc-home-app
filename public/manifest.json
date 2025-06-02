@@ -4,6 +4,8 @@
   "start_url": "/",
   "id": "NBCHomeApp",
   "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "description": "NBCHomeApp is the internal app for NBC employees",
   "icons": [
     {

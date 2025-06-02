@@ -124,3 +124,7 @@ body {
 .light .bg-\[rgba\(0\,19\,70\,0\.03\)\] {
     background-color: rgba(0, 19, 70, 0.03);
 }
+  
+::-webkit-scrollbar {
+	display: none;
+}
