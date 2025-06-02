@@ -41,7 +41,7 @@ export default function DashboardPage() {
 
 	return (
 		<>
-			<main className="bg-gray-100 p-4 pb-24 space-y-4">
+			<main className="bg-white dark:bg-[#001346] p-4 pb-24 space-y-4">
 				{/* Header Card */}
 				<div className="flex items-center space-x-4">
 					<img
@@ -52,22 +52,22 @@ export default function DashboardPage() {
 						className="rounded-full"
 					/>
 					<div>
-						<h2 className="text-[16px] font-[400] text-[#001346] leading-normal">សូមស្វាគមន៍ការត្រឡប់មកវិញ</h2>
-						<p className="text-[23px] font-[600] text-[#001346]">ទេព វណ្ណា</p>
-						<p className="text-[13px] font-[400] text-[#001346] leading-normal">{formattedDate}</p>
+						<h2 className="text-[16px] font-[400] text-[#001346] dark:text-white leading-normal">សូមស្វាគមន៍ការត្រឡប់មកវិញ</h2>
+						<p className="text-[23px] font-[600] text-[#001346] dark:text-white">ទេព វណ្ណា</p>
+						<p className="text-[13px] font-[400] text-[#001346] dark:text-white leading-normal">{formattedDate}</p>
 					</div>
 				</div>
 
 				{/* Looping Cards */}
 				{announcements.map((item) => (
-					<div key={item.id} className="bg-[rgba(0,19,70,0.03)] p-[16px] rounded-[24px]">
-						<p  className="text-[14px] italic font-[400] text-[#001346] mb-2">{item.dateKh}</p>
-						<h3 className="text-[20px] font-[600] text-[#001346] mb-2 leading-normal">{item.titleKh}</h3>
-						<p className="text-[16px] font-[400] text-[#001346] leading-normal line-clamp-3">
+					<div key={item.id} className="bg-[rgba(0,19,70,0.03)] dark:bg-[#e5e5e5] p-[16px] rounded-[24px]">
+						<p  className="text-[14px] italic font-[400] text-[#001346] dark:text-[#001346]e mb-2">{item.dateKh}</p>
+						<h3 className="text-[20px] font-[600] text-[#001346] mb-2 dark:text-[#001346] leading-normal">{item.titleKh}</h3>
+						<p className="text-[16px] font-[400] text-[#001346] dark:text-[#001346] leading-normal line-clamp-3">
 							{item.text}
 						</p>
 						<Link href="#">
-							<span className="flex items-center gap-x-1 text-[#001346] text-[16px] font-[600] leading-normal rounded-[32px] bg-[rgba(0,19,70,0.05)] mt-4 h-[40px] w-[200px] px-[16px] py-[8px] hover:underline">
+							<span className="flex items-center gap-x-1 text-[#001346] dark:text-[#001346] dark:border-white text-[16px] font-[600] leading-normal rounded-[32px] bg-[rgba(0,19,70,0.05)] mt-4 h-[40px] w-[200px] px-[16px] py-[8px] hover:underline">
 								មើលសេចក្តីប្រកាស <ArrowRight className="w-[24px] h-[24px] font-normal ml-[5px]" />
 							</span>
 						</Link>
