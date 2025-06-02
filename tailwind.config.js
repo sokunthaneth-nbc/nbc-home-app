@@ -1,13 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
-      "./app/**/*.{js,ts,jsx,tsx}",  // <-- add this for new app dir
-      "./pages/**/*.{js,ts,jsx,tsx}",  // if you use pages dir
-      "./components/**/*.{js,ts,jsx,tsx}",
-    ],
-    theme: {
-      extend: {},
-    },
-    plugins: [],
-  };
-  
+	darkMode: 'class', // ✅ Enable class-based dark mode
+	content: [
+	  "./app/**/*.{js,ts,jsx,tsx}",
+	  "./pages/**/*.{js,ts,jsx,tsx}",
+	  "./components/**/*.{js,ts,jsx,tsx}",
+	  "./node_modules/flowbite-react/**/*.js", // ✅ Add this if you use Flowbite React
+	],
+	theme: {
+	  extend: {},
+	},
+	plugins: [],
+  };  

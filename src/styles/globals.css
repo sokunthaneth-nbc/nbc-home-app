@@ -1,28 +1,120 @@
 @import "tailwindcss";
-@plugin "flowbite-react/plugin/tailwindcss";
-@source "../../.flowbite-react/class-list.json";
+/* @plugin "flowbite-react/plugin/tailwindcss"; */
+/* @source "../../.flowbite-react/class-list.json"; */
 
+/* @import "tailwindcss/preflight"; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: custom CSS variables */
 :root {
 	--background: #ffffff;
 	--foreground: #171717;
-}
-
-@theme inline {
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
-	}
+  }
+  
+.dark {
+	--background: #001346;
+	--foreground: #fff;
 }
 
 body {
-	background: var(--background);
+	background-color: var(--background);
 	color: var(--foreground);
 	font-family: Arial, Helvetica, sans-serif;
+}
+
+  .dark .dark\:text-white {
+	color: #fff;
+  }
+  .dark .dark\:border-white{
+	border-color: #fff;
+  }
+  .dark .dark\:bg-\[\#001346\]{
+	background-color: #001346;
+  }
+  .dark .dark\:bg-white{
+	background-color: #fff;
+  }
+  .dark .dark\:text-\[\#001346\]{
+	color: #001346;
+  }
+  .dark .dark\:bg-\[\#0d1f4f\]{
+	background-color:#0d1f4f;
+  }
+ 	.dark .dark\:bg-gray {
+		border-color: #fff;
+ }
+.dark .fc-header-toolbar{
+	background-color: #001346;
+}
+.dark #fc-dom-1{
+	color: #fff ;
+}
+.dark .fc-scrollgrid-sync-inner{
+	background-color: #001346;
+}
+.dark .fc-event-title{
+	color: #001346;
+}
+.dark .fc .fc-daygrid-day.fc-day-today .fc-scrollgrid-sync-inner{
+	background-color: rgba(255,220,40,.15);
+}
+.dark .fc .bg-blue-100 .fc-scrollgrid-sync-inner{
+	background-color: oklch(70.7% 0.165 254.624);
+}  
+.dark .fc-today-button.fc-button.fc-button-primary{
+	background-color: #fff;
+	color: #001346;
+}
+.dark\:bg-\[\#e5e5e5\]{
+	background-color: #e5e5e5;
+}
+
+/* Light */
+  .light .bg-white{
+	background-color: #fff;
+  }
+  .light .text-\[\#040e28\]{
+	color: #040e28;
+  }
+  .light .bg-\[\#0f4aea\]{
+	background-color: #0f4aea;
+  }
+  .light .text-white{
+	color: #fff;
+  }
+  .light .bg-menu {
+	background-color: rgba(0, 19, 70, 0.1);
+  }
+  .light .border-\[\#001346\]{
+	border-color: #001346;
+  }
+  .light .bg-menu svg{
+	color: #001346 !important;
+  }
+  .light .bg-menu span.text-xs{
+	color: #001346 !important;
+  }
+  .light .text-\[\#001346\]{
+	color: #001346;
+  }
+  .light .border-\[\#00134608\]{
+	border-color: #e5e5e5
+  }
+  .light .fc-header-toolbar{
+	background-color: #fff ;
+}
+.light #fc-dom-1{
+	color: #001347 ;
+}
+.light .fc-scrollgrid-section{
+	background-color: #fff;
+}
+.light .bg-\[rgba\(0\,19\,70\,0\.05\)\]{
+	background-color:rgba(0,19,70,0.05);
+}
+.light .fc-today-button.fc-button.fc-button-primary{
+	background-color: #001346;
+	color: #fff;
 }

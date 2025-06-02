@@ -17,6 +17,10 @@
 	font-size: 22px;
 	color:#000;
 }
+.fc .fc-toolbar-title{
+	font-size: 26px;
+	font-weight: 600;
+}
 /* Center content in each calendar cell */
 .fc .fc-daygrid-day-frame {
 	display: flex;
@@ -40,7 +44,6 @@
 .fc-col-header {
 	position: sticky;
 	top: 3rem; /* adjust based on header height */
-	background: white;
 	z-index: 10;
 }
 .fc-day-sun{
@@ -96,4 +99,20 @@
 	height: 50px;
 	min-height: 50px;
 	max-height: 50px;
+}.fc-event-title.fc-sticky{
+	opacity: 0;
+}
+.fc .fc-col-header{
+	background-color: transparent !important;
+}
+
+.fc-daygrid-day[data-date]:not([data-date^=""]) {
+  pointer-events: auto;
+}
+.fc-daygrid-day.future-date {
+  pointer-events: none;
+  opacity: 0.4;
+}
+.fc .fc-button-primary:focus {
+    box-shadow: none;
 }

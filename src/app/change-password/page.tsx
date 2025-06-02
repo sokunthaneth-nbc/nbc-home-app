@@ -34,28 +34,25 @@ export default function ChangePasswordPage() {
 	const handleChangePassword = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!validate()) return;
-
-		// Here you would normally make an API call to update the password.
-		// For now, we'll just redirect:
 		router.push("/home");
 	};
 
 	return (
-		<section className="bg-gray-50 min-h-screen flex flex-col justify-between">
-			<div className="w-full bg-white px-6 py-8 flex-1 overflow-auto">
-				<p className="text-base font-normal text-[#040e28]">Welcome to NBC Staff Application</p>
-				<h1 className="text-[26px] my-[15px] font-semibold leading-tight tracking-tight text-[#040e28]">
-					Change your password
+		<section className="bg-white dark:bg-[#001346] min-h-screen flex flex-col justify-between">
+			<div className="w-full  px-6 py-8 flex-1 overflow-auto">
+				<p className="text-base font-normal text-[#040e28] dark:text-white">សូមស្វាគមន៍</p>
+				<h1 className="text-[26px] my-[15px] font-semibold leading-tight tracking-tight text-[#040e28] dark:text-white">
+					ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នក
 				</h1>
-				<p className="text-base font-normal text-[#040e28]">
-					Since this is your first time, please create a new password for your account.
+				<p className="text-base font-normal text-[#040e28] dark:text-white">
+					នេះជាលើកដំបូងរបស់អ្នក សូមបង្កើតពាក្យសម្ងាត់ថ្មីសម្រាប់គណនីរបស់អ្នក
 				</p>
 
 				<form className="space-y-6 pt-6 pb-32" onSubmit={handleChangePassword}>
 					{/* New Password */}
 					<div>
-						<label htmlFor="newPassword" className="block mb-2 text-sm font-normal text-[#040e28]">
-							New Password <span className="text-red-600">*</span>
+						<label htmlFor="newPassword" className="block mb-2 text-sm font-normal text-[#040e28] dark:text-white">
+							ពាក្យសម្ងាត់ថ្មី <span className="text-red-600">*</span>
 						</label>
 						<div className="relative">
 							<input
@@ -63,28 +60,28 @@ export default function ChangePasswordPage() {
 								id="newPassword"
 								value={newPassword}
 								onChange={(e) => setNewPassword(e.target.value)}
-								className={`bg-gray-50 border ${
-									errors.newPassword ? "border-red-500" : "border-gray-300"
-								} h-[56px] p-[16px] pr-10 rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600`}
+								className={`bg-white dark:bg-white border ${
+									errors.newPassword ? "border-red-500" : "border-gray-300 dark:border-gray-600"
+								} text-gray-900 dark:text-[#001346] h-[56px] p-[16px] pr-10 rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600`}
 							/>
 							<button
 								type="button"
 								onClick={() => setShowPassword(!showPassword)}
-								className="absolute bottom-[19px] right-3 text-gray-500 hover:text-gray-700"
+								className="absolute bottom-[19px] right-3 text-gray-500 dark:text-[#001346] hover:text-gray-700 dark:hover:text-white"
 								tabIndex={-1}
 							>
 								{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
 							</button>
 						</div>
 						{errors.newPassword && (
-							<p className="text-sm text-red-600 mt-1">{errors.newPassword}</p>
+							<p className="text-sm text-red-600 dark:text-red-400 mt-1">{errors.newPassword}</p>
 						)}
 					</div>
 
 					{/* Confirm New Password */}
 					<div>
-						<label htmlFor="confirmPassword" className="block mb-2 text-sm font-normal text-[#040e28]">
-							Confirm new password <span className="text-red-600">*</span>
+						<label htmlFor="confirmPassword" className="block mb-2 text-sm font-normal text-[#040e28] dark:text-white">
+							បញ្ជាក់ពាក្យសម្ងាត់ថ្មី <span className="text-red-600">*</span>
 						</label>
 						<div className="relative">
 							<input
@@ -92,29 +89,29 @@ export default function ChangePasswordPage() {
 								id="confirmPassword"
 								value={confirmPassword}
 								onChange={(e) => setConfirmPassword(e.target.value)}
-								className={`bg-gray-50 border ${
-									errors.confirmPassword ? "border-red-500" : "border-gray-300"
-								} h-[56px] p-[16px] pr-10 rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600`}
+								className={`bg-white dark:bg-white border ${
+									errors.confirmPassword ? "border-red-500" : "border-gray-300 dark:border-gray-600"
+								} text-gray-900 dark:text-[#001346] h-[56px] p-[16px] pr-10 rounded-lg block w-full focus:ring-primary-600 focus:border-primary-600`}
 							/>
 							<button
 								type="button"
 								onClick={() => setShowPassword(!showPassword)}
-								className="absolute bottom-[19px] right-3 text-gray-500 hover:text-gray-700"
+								className="absolute bottom-[19px] right-3 text-gray-500 dark:text-[#001346] hover:text-gray-700 dark:hover:text-white"
 								tabIndex={-1}
 							>
 								{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
 							</button>
 						</div>
 						{errors.confirmPassword && (
-							<p className="text-sm text-red-600 mt-1">{errors.confirmPassword}</p>
+							<p className="text-sm text-red-600 dark:text-red-400 mt-1">{errors.confirmPassword}</p>
 						)}
 					</div>
 
 					{/* Submit Button at Bottom */}
-					<div className="fixed bottom-0 left-0 w-full bg-white p-4">
+					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4 border-t border-gray-200 dark:border-gray-700">
 						<button
 							type="submit"
-							className="w-full text-white bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
+							className="w-full text-white dark:bg-white dark:text-[#001346] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
 						>
 							Next
 						</button>
