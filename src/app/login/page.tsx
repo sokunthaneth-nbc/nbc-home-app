@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Fingerprint } from "lucide-react";
 import RegisterBiometric from "@/components/RegisterBiometric";
 import LoginBiometric from "@/components/VerifyBiometric";
+import axios from "axios";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -41,31 +42,81 @@ export default function LoginPage() {
 	};
 
 	//Function Login
-	const handleLogin = (e: React.FormEvent) => {
+	// const handleLogin = (e: React.FormEvent) => {
+	// 	e.preventDefault();
+
+	// 	if (!validate()) return;
+
+	// 	const isStaffIdCorrect = staffId === defaultStaffId;
+	// 	const isPasswordCorrect = password === defaultPassword;
+
+	// 	if (isStaffIdCorrect && isPasswordCorrect) {
+	// 		router.push("/change-password");
+	// 	} else {
+	// 		const newErrors: { staffId?: string; password?: string } = {};
+
+			// if (!isStaffIdCorrect && !isPasswordCorrect) {
+			// 	newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // both wrong
+			// 	newErrors.password = "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ";
+			// } else if (!isStaffIdCorrect) {
+			// 	newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // wrong ID only
+			// } else if (!isPasswordCorrect) {
+			// 	newErrors.password = "អ្នកបានបញ្ចូលពាក្យសម្ងាត់ខុស"; // wrong password only
+			// }
+
+	// 		setErrors(newErrors); // only one setErrors call
+	// 	}
+	// };
+
+	const [isLoading, setIsLoading] = useState(false);
+
+	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
+		setErrors({});
 
 		if (!validate()) return;
 
-		const isStaffIdCorrect = staffId === defaultStaffId;
-		const isPasswordCorrect = password === defaultPassword;
+		try {
+			setIsLoading(true);
 
-		if (isStaffIdCorrect && isPasswordCorrect) {
-			router.push("/change-password");
-		} else {
-			const newErrors: { staffId?: string; password?: string } = {};
+			const response = await axios.post("http://172.16.9.80/auth/login", {
+				staff_id: staffId,
+				password: password,
+			});
 
-			if (!isStaffIdCorrect && !isPasswordCorrect) {
-				newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // both wrong
-				newErrors.password = "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ";
-			} else if (!isStaffIdCorrect) {
-				newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // wrong ID only
-			} else if (!isPasswordCorrect) {
-				newErrors.password = "អ្នកបានបញ្ចូលពាក្យសម្ងាត់ខុស"; // wrong password only
+			const { message, token, user } = response.data;
+			console.log("Response data:", response.data); // Debug log
+
+			if (message !== "Login successful" || !token || !user) {
+				setErrors({
+					staffId: "អ្នកប្រើប្រាស់មិនមានទេ",
+					password: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
+				});
+				return;
 			}
 
-			setErrors(newErrors); // only one setErrors call
+			localStorage.setItem("authToken", token);
+			localStorage.setItem("userInfo", JSON.stringify(user));
+
+			router.push("/change-password");
+
+		} catch (error: any) {
+			console.error("Login error:", error);
+
+			if (error.response) {
+				alert("កំហុសពីម៉ាស៊ីនមេ: " + (error.response.data.message || "មានបញ្ហា"));
+			} else if (error.request) {
+				alert("មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេបានទេ។ សូមពិនិត្យបណ្តាញរបស់អ្នក។");
+			} else {
+				alert("មានបញ្ហាមិនរំពឹងទុកកើតឡើង។ សូមសាកល្បងម្ដងទៀត។");
+			}
+		} finally {
+			setIsLoading(false);
 		}
 	};
+
+
+
 
 	//check Tying
 	const hasTyped = staffId !== "" || password !== "";
@@ -142,9 +193,10 @@ export default function LoginPage() {
 					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4">
 						<button
 							type="submit"
-							className="w-full text-white h-[40px] px-[16px] py-[8px] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-[32px] text-[16px] font-[600] text-center flex justify-center items-center gap-2"
+							disabled={isLoading}
+							className={`w-full text-white h-[40px] px-[16px] py-[8px] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-[32px] text-[16px] font-[600] text-center flex justify-center items-center gap-2 ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
 						>
-							{hasTyped ? (
+							{isLoading ? "កំពុងត្រួតពិនិត្យ..." : hasTyped ? (
 								"ចូលទៅកាន់ប្រព័ន្ធ"
 							) : (
 								<>
