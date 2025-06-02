@@ -37,7 +37,7 @@ export default function ProfilePage() {
 		<>
 			<main className="p-4 pb-20 space-y-4">
 				<div className="max-w-md mx-auto">
-					<h2 className="text-[26px] font-[600] text-center mb-4 text-[#001346] dark:text-white">ប្រវត្តិរូប</h2>
+					<h2 className="text-[26px] font-[600] text-center mb-4 text-[#001346] dark:text-white">ការកំណត់</h2>
 					<p className="text-[#001346] dark:text-white mb-2">
 						<span className="text-[16px] font-[400] leading-normal">ជំរាបសួរ</span><br />
 						<span className="italic text-[26px] font-[600]">ទេព វណ្ណា</span>

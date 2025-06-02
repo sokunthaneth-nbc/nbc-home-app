@@ -66,7 +66,7 @@ export default function AttendancePage() {
 
 	return (
 		<>
-			<div className="relative bg-white dark:bg-[#001346] pb-[45px]">
+			<div className="relative bg-white dark:bg-[#001346] pb-[60px]">
 				<div className="p-6">
 					<div className="calendar-container overflow-y-auto max-h-[calc(100vh-6rem)]">
 						<FullCalendar
@@ -191,6 +191,7 @@ export default function AttendancePage() {
 														alt="Future"
 														className="mx-auto h-24 pb-[20px] object-contain"
 													/>
+													<p className="mt-2 text-[#001346] dark:text-white text-sm">មិនមានកំណត់ត្រាទេ</p>
 												</td>
 											</tr>
 										)}
