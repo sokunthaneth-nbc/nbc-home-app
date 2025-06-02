@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Fingerprint } from "lucide-react";
 import RegisterBiometric from "@/components/RegisterBiometric";
 import LoginBiometric from "@/components/VerifyBiometric";
 
@@ -13,8 +13,8 @@ export default function LoginPage() {
 	const defaultStaffId = "2530";
 	const defaultPassword = "123456";
 
-	const [staffId, setStaffId] = useState("2530");
-	const [password, setPassword] = useState("123456");
+	const [staffId, setStaffId] = useState("");
+	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [errors, setErrors] = useState<{ staffId?: string; password?: string }>({});
 
@@ -66,6 +66,9 @@ export default function LoginPage() {
 			setErrors(newErrors); // only one setErrors call
 		}
 	};
+
+	//check Tying
+	const hasTyped = staffId !== "" || password !== "";
 
 	return (
 		<section className="bg-white dark:bg-[#001346] min-h-screen flex flex-col justify-between">
@@ -136,12 +139,18 @@ export default function LoginPage() {
 					<RegisterBiometric/>
 					<LoginBiometric/>
 					{/* Submit Button at Bottom */}
-					<div className="fixed bottom-0 left-0 w-full bg-white p-4">
+					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4">
 						<button
 							type="submit"
-							className="w-full text-white dark:bg-white dark:text-[#001346] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
+							className="w-full text-white h-[40px] px-[16px] py-[8px] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-[32px] text-[16px] font-[600] text-center flex justify-center items-center gap-2"
 						>
-							Next
+							{hasTyped ? (
+								"ចូលទៅកាន់ប្រព័ន្ធ"
+							) : (
+								<>
+									ចូលទៅកាន់ប្រព័ន្ធជាមួយ Bio <Fingerprint size={20} />
+								</>
+							)}
 						</button>
 					</div>
 				</form>
