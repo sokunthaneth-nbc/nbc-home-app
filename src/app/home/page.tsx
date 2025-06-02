@@ -60,14 +60,14 @@ export default function DashboardPage() {
 
 				{/* Looping Cards */}
 				{announcements.map((item) => (
-					<div key={item.id} className="bg-[rgba(0,19,70,0.03)] dark:bg-[#e5e5e5] p-[16px] rounded-[24px]">
-						<p  className="text-[14px] italic font-[400] text-[#001346] dark:text-[#001346]e mb-2">{item.dateKh}</p>
-						<h3 className="text-[20px] font-[600] text-[#001346] mb-2 dark:text-[#001346] leading-normal">{item.titleKh}</h3>
-						<p className="text-[16px] font-[400] text-[#001346] dark:text-[#001346] leading-normal line-clamp-3">
+					<div key={item.id} className="bg-[rgba(0,19,70,0.03)] dark:bg-[#081a4c] p-[16px] rounded-[24px]">
+						<p  className="text-[14px] italic font-[400] text-[#001346] dark:text-white mb-2">{item.dateKh}</p>
+						<h3 className="text-[20px] font-[600] text-[#001346] mb-2 dark:text-white leading-normal">{item.titleKh}</h3>
+						<p className="text-[16px] font-[400] text-[#001346] dark:text-white leading-normal line-clamp-3">
 							{item.text}
 						</p>
 						<Link href="#">
-							<span className="flex items-center gap-x-1 text-[#001346] dark:text-[#001346] dark:border-white text-[16px] font-[600] leading-normal rounded-[32px] bg-[rgba(0,19,70,0.05)] mt-4 h-[40px] w-[200px] px-[16px] py-[8px] hover:underline">
+							<span className="flex items-center gap-x-1 text-[#001346] dark:text-white dark:border-white dark:bg-[#142555] text-[16px] font-[600] leading-normal rounded-[32px] bg-[rgba(0,19,70,0.05)] mt-4 h-[40px] w-[200px] px-[16px] py-[8px] hover:underline">
 								មើលសេចក្តីប្រកាស <ArrowRight className="w-[24px] h-[24px] font-normal ml-[5px]" />
 							</span>
 						</Link>
