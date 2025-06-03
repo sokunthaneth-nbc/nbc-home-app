@@ -195,8 +195,10 @@ export default function LoginPage() {
 					</div>
 
 					
-					<RegisterBiometric/>
-					<LoginBiometric/>
+					{/* <RegisterBiometric/>
+					<LoginBiometric/> */}
+
+					
 					{/* Submit Button at Bottom */}
 					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4">
 						<button
