@@ -92,7 +92,6 @@ export default function LoginPage() {
 				staff_id: staffId,
 				password: password,
 			});
-
 			
 			//console.log("Response data:", response.data); // Debug log
 

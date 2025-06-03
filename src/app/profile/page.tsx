@@ -3,14 +3,17 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import MobileBottomNav from "@/components/MobileBottomNav";
 import DarkModeToggle from '@/components/DarkModeToggle';
+import { removeToken } from "@/lib/auth";
 
 export default function ProfilePage() {
 	const router = useRouter();
 	const [showLogoutPopup, setShowLogoutPopup] = useState(false);
 	const [animateIn, setAnimateIn] = useState(false);
 
+	//Function Logout
 	const handleLogout = () => {
-		console.log("User logged out");
+		removeToken(); //
+		localStorage.removeItem("staff_id");
 		router.push('/login');
 	};
 
