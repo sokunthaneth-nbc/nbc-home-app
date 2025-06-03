@@ -114,9 +114,9 @@ export default function ChangePasswordPage() {
 					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4 border-t border-gray-200 dark:border-gray-700">
 						<button
 							type="submit"
-							className="w-full text-white dark:bg-white dark:text-[#001346] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
+							className="w-full text-white h-[40px] px-[16px] py-[8px] dark:bg-white dark:text-[#001346] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-[32px] text-[16px] font-[600] text-center"
 						>
-							Next
+							ផ្លាស់ប្តូរពាក្យសម្ងាត់
 						</button>
 					</div>
 				</form>

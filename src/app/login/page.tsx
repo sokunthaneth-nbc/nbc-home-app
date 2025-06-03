@@ -3,9 +3,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Fingerprint } from "lucide-react";
 import RegisterBiometric from "@/components/RegisterBiometric";
 import LoginBiometric from "@/components/VerifyBiometric";
+import axios from "axios";
+import { setAcccessToken } from "@/lib/auth";
+import { validateForm } from "../utils/validation";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -13,59 +16,119 @@ export default function LoginPage() {
 	const defaultStaffId = "2530";
 	const defaultPassword = "123456";
 
-	const [staffId, setStaffId] = useState("2530");
-	const [password, setPassword] = useState("123456");
+	const [staffId, setStaffId] = useState("");
+	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [errors, setErrors] = useState<{ staffId?: string; password?: string }>({});
 
 	//Function Validate
-	const validate = () => {
-		const newErrors: { staffId?: string; password?: string } = {};
+	// const validate = () => {
+	// 	const newErrors: { staffId?: string; password?: string } = {};
 
-		if (!staffId.trim()) {
-			newErrors.staffId = "សូមបញ្ចូលលេខសម្គាល់ NBC";
-		} else if (!/^[a-zA-Z0-9]+$/.test(staffId)) {
-			newErrors.staffId = "លេខសម្គាល់ NBC តំរូវជា លេខ";
-		} else if (staffId.length !== 4) {
-			newErrors.staffId = "លេខសម្គាល់ NBC ត្រូវមាន ៤ តួអក្សរ";
-		}
+	// 	if (!staffId.trim()) {
+	// 		newErrors.staffId = "សូមបញ្ចូលលេខសម្គាល់ NBC";
+	// 	} else if (!/^[a-zA-Z0-9]+$/.test(staffId)) {
+	// 		newErrors.staffId = "លេខសម្គាល់ NBC តំរូវជា លេខ";
+	// 	} else if (staffId.length !== 4) {
+	// 		newErrors.staffId = "លេខសម្គាល់ NBC ត្រូវមាន ៤ តួអក្សរ";
+	// 	}
 
-		if (!password.trim()) {
-			newErrors.password = "សូមបញ្ចូលលេខសម្ងាត់";
-		} else if (password.length < 6) {
-			newErrors.password = "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ ៦ តួអក្សរ";
-		}
+	// 	if (!password.trim()) {
+	// 		newErrors.password = "សូមបញ្ចូលលេខសម្ងាត់";
+	// 	} else if (password.length < 6) {
+	// 		newErrors.password = "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ ៦ តួអក្សរ";
+	// 	}
 
-		setErrors(newErrors);
-		return Object.keys(newErrors).length === 0;
-	};
+	// 	setErrors(newErrors);
+	// 	return Object.keys(newErrors).length === 0;
+	// };
 
 	//Function Login
-	const handleLogin = (e: React.FormEvent) => {
+	// const handleLogin = (e: React.FormEvent) => {
+	// 	e.preventDefault();
+
+	// 	if (!validate()) return;
+
+	// 	const isStaffIdCorrect = staffId === defaultStaffId;
+	// 	const isPasswordCorrect = password === defaultPassword;
+
+	// 	if (isStaffIdCorrect && isPasswordCorrect) {
+	// 		router.push("/change-password");
+	// 	} else {
+	// 		const newErrors: { staffId?: string; password?: string } = {};
+
+			// if (!isStaffIdCorrect && !isPasswordCorrect) {
+			// 	newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // both wrong
+			// 	newErrors.password = "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ";
+			// } else if (!isStaffIdCorrect) {
+			// 	newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // wrong ID only
+			// } else if (!isPasswordCorrect) {
+			// 	newErrors.password = "អ្នកបានបញ្ចូលពាក្យសម្ងាត់ខុស"; // wrong password only
+			// }
+
+	// 		setErrors(newErrors); // only one setErrors call
+	// 	}
+	// };
+
+	const [isLoading, setIsLoading] = useState(false);
+
+	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		if (!validate()) return;
+		const { valid, errors } = validateForm(
+			staffId,
+			password
+		);
+		setErrors(errors);
+		//console.log(errors,'error');
+		if (!valid) {
+			return;
+		}
 
-		const isStaffIdCorrect = staffId === defaultStaffId;
-		const isPasswordCorrect = password === defaultPassword;
+		try {
+			setIsLoading(true);
 
-		if (isStaffIdCorrect && isPasswordCorrect) {
-			router.push("/change-password");
-		} else {
-			const newErrors: { staffId?: string; password?: string } = {};
+			const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,{
+				staff_id: staffId,
+				password: password,
+			});
 
-			if (!isStaffIdCorrect && !isPasswordCorrect) {
-				newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // both wrong
-				newErrors.password = "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ";
-			} else if (!isStaffIdCorrect) {
-				newErrors.staffId = "អ្នកប្រើប្រាស់មិនមានទេ"; // wrong ID only
-			} else if (!isPasswordCorrect) {
-				newErrors.password = "អ្នកបានបញ្ចូលពាក្យសម្ងាត់ខុស"; // wrong password only
+			
+			//console.log("Response data:", response.data); // Debug log
+
+			const token = response?.data?.data?.access_token;
+			const userId = response?.data?.data?.staff_id;
+			const userStatusCode = response?.data?.status?.code; // Get the user's status
+			const invalidCredentials = response?.data?.status?.message;
+			const userReqiureChangePwd = response?.data?.data?.status;
+
+			//check Invaild user
+			if (userStatusCode === 1) {
+				if (invalidCredentials === "Invalid email or password") {
+					setErrors({ staffId: "ពត៍មានមិនត្រឹមត្រូវ", password: "ពត៍មានមិនត្រឹមត្រូវ" });				}
+				return;
 			}
 
-			setErrors(newErrors); // only one setErrors call
+			//Set Toaken and Staff_is to local storage
+			setAcccessToken(token);
+			localStorage.setItem("staff_id",userId);
+
+			//check user required to change password or not
+			if(userReqiureChangePwd === 'UPDATE_PW_REQUIRED'){
+				router.push("/home");
+			}else{
+				router.push("/change-password");
+			}
+
+		} catch (error) {
+			console.error("Login failed:", error);
+		}finally {
+			setIsLoading(false); // always reset loading no matter what
 		}
 	};
+
+	//check Tying
+	const hasTyped = staffId !== "" || password !== "";
 
 	return (
 		<section className="bg-white dark:bg-[#001346] min-h-screen flex flex-col justify-between">
@@ -136,12 +199,19 @@ export default function LoginPage() {
 					<RegisterBiometric/>
 					<LoginBiometric/>
 					{/* Submit Button at Bottom */}
-					<div className="fixed bottom-0 left-0 w-full bg-white p-4">
+					<div className="fixed bottom-0 left-0 w-full bg-white dark:bg-[#001346] p-4">
 						<button
 							type="submit"
-							className="w-full text-white dark:bg-white dark:text-[#001346] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-[32px] text-base px-4 py-4 text-center"
+							disabled={isLoading}
+							className={`w-full text-white h-[40px] px-[16px] py-[8px] bg-[#0f4aea] hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-[32px] text-[16px] font-[600] text-center flex justify-center items-center gap-2 ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`}
 						>
-							Next
+							{isLoading ? "កំពុងត្រួតពិនិត្យ..." : hasTyped ? (
+								"ចូលទៅកាន់ប្រព័ន្ធ"
+							) : (
+								<>
+									ចូលទៅកាន់ប្រព័ន្ធជាមួយ Bio <Fingerprint size={20} />
+								</>
+							)}
 						</button>
 					</div>
 				</form>
