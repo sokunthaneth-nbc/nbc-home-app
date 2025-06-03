@@ -1,12 +1,18 @@
+'use client';
+import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 import FirebaseMessaging from "@/components/FirebaseMessaging";
 import Link from 'next/link';
 import MobileBottomNav from "@/components/MobileBottomNav";
 import { ArrowRight } from 'lucide-react';
 import { formatDateToKhmer } from '../utils/khmerDate';
+import { getAccessToken } from "@/lib/auth";
 
 export default function DashboardPage() {
+	const router = useRouter();
 	const today = new Date();
-  	const formattedDate = formatDateToKhmer(today);
+  	const formattedDate = formatDateToKhmer(today,{ showDayName: true });
+	const [profile, setProfile] = useState<any | null>(null);
 
 	const announcements = [
 		{
@@ -39,6 +45,40 @@ export default function DashboardPage() {
 		},
 	];
 
+	// Fetch profile when component mounts
+	useEffect(() => {
+		const fetchProfile = async () => {
+			const staff_id = localStorage.getItem("staff_id");
+			const token =getAccessToken();
+			//console.log(staff_id,'staff_id');
+			if (!staff_id) {
+				router.push('/login');
+				return;
+			}
+			try {
+				const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({ staff_id: staff_id }),
+				});
+
+				if (!res.ok) throw new Error("Failed to fetch profile");
+
+				const data = await res.json();
+				//console.log("User Profile Data 1:", data?.data.fullnameKh);
+				setProfile(data);
+				
+			} catch (err) {
+				console.error("Profile fetch error:", err);
+			}
+		};
+
+		fetchProfile();
+	}, [router]);
+
 	return (
 		<>
 			<main className="bg-white dark:bg-[#001346] p-4 pb-24 space-y-4">
@@ -53,7 +93,9 @@ export default function DashboardPage() {
 					/>
 					<div>
 						<h2 className="text-[16px] font-[400] text-[#001346] dark:text-white leading-normal">សូមស្វាគមន៍ការត្រឡប់មកវិញ</h2>
-						<p className="text-[23px] font-[600] text-[#001346] dark:text-white">ទេព វណ្ណា</p>
+						<p className="text-[23px] font-[600] text-[#001346] dark:text-white">
+							{profile?.data?.fullnameKh || 'កំពុងទាញទិន្នន័យ...'}
+						</p>
 						<p className="text-[13px] font-[400] text-[#001346] dark:text-white leading-normal">{formattedDate}</p>
 					</div>
 				</div>

@@ -1,14 +1,16 @@
 'use client';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
 import MobileBottomNav from "@/components/MobileBottomNav";
 import DarkModeToggle from '@/components/DarkModeToggle';
-import { removeToken } from "@/lib/auth";
+import { getAccessToken,removeToken } from "@/lib/auth";
+import { formatDateToKhmer } from "../utils/khmerDate";
 
 export default function ProfilePage() {
 	const router = useRouter();
 	const [showLogoutPopup, setShowLogoutPopup] = useState(false);
 	const [animateIn, setAnimateIn] = useState(false);
+	const [profile, setProfile] = useState<any | null>(null);
 
 	//Function Logout
 	const handleLogout = () => {
@@ -17,14 +19,68 @@ export default function ProfilePage() {
 		router.push('/login');
 	};
 
-	const profileData = [
-		{ label: 'ថ្ងៃខែឆ្នាំកំណើត', value: '11/11/1911' },
-		{ label: 'លេខទូរស័ព្ទ', value: '+855 (87) 575 857' },
-		{ label: 'អ៊ីមែល', value: 'mishel.matmorsell@nbc.gov.kh' },
-		{ label: 'លេខសម្គាល់ NBC', value: '2659' },
-		{ label: 'នាយកដ្ឋាន', value: 'ពត៏មានវិទ្យា' },
-		{ label: 'មុខតំណែង', value: 'បុគ្គលិក' }
-	];
+	// Fetch profile when component mounts
+	useEffect(() => {
+		const fetchProfile = async () => {
+			const staff_id = localStorage.getItem("staff_id");
+			const token =getAccessToken();
+			//console.log(staff_id,'staff_id');
+			if (!staff_id) {
+				router.push('/login');
+				return;
+			}
+			try {
+				const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({ staff_id: staff_id }),
+				});
+
+				if (!res.ok) throw new Error("Failed to fetch profile");
+
+				const data = await res.json();
+				//console.log("User Profile Data 1:", data);
+
+				setProfile(data);
+
+			} catch (err) {
+				console.error("Profile fetch error:", err);
+			}
+		};
+
+		fetchProfile();
+	}, [router]);
+
+	const profileData = profile ? [
+		{
+			label: 'ថ្ងៃខែឆ្នាំកំណើត',
+			value: profile?.data?.dob?formatDateToKhmer(new Date(profile.data.dob), { showDayName: false }): '-',
+		},
+		{
+			label: 'លេខទូរស័ព្ទ',
+			value: profile?.data?.primaryPhone || '-',
+		},
+		{
+			label: 'អ៊ីមែល',
+			value: profile?.data?.email || '-',
+		},
+		{
+			label: 'លេខសម្គាល់ NBC',
+			value: profile?.data?.employeeIdNumber || '-',
+		},
+		{
+			label: 'នាយកដ្ឋាន',
+			value: profile?.data?.department || '-',
+		},
+		{
+			label: 'មុខតំណែង',
+			value: profile?.data?.unit || '-',
+		},
+	] : [];
+
 
 	const openLogoutPopup = () => {
 		setShowLogoutPopup(true);
@@ -43,7 +99,9 @@ export default function ProfilePage() {
 					<h2 className="text-[26px] font-[600] text-center mb-4 text-[#001346] dark:text-white">ការកំណត់</h2>
 					<p className="text-[#001346] dark:text-white mb-2">
 						<span className="text-[16px] font-[400] leading-normal">ជំរាបសួរ</span><br />
-						<span className="italic text-[26px] font-[600]">ទេព វណ្ណា</span>
+						<span className="italic text-[26px] font-[600]">
+							{profile?.data?.fullnameKh || 'កំពុងទាញទិន្នន័យ...'}
+						</span>
 					</p>
 
 					<h2 className="text-[20px] font-[600] text-[#001346] dark:text-white leading-normal mb-2">ព័ត៌មានរបស់អ្នក</h2>
