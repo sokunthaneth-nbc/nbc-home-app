@@ -7,6 +7,8 @@ import { Eye, EyeOff, Fingerprint } from "lucide-react";
 import RegisterBiometric from "@/components/RegisterBiometric";
 import LoginBiometric from "@/components/VerifyBiometric";
 import axios from "axios";
+import { setAcccessToken } from "@/lib/auth";
+import { validateForm } from "../utils/validation";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -20,26 +22,26 @@ export default function LoginPage() {
 	const [errors, setErrors] = useState<{ staffId?: string; password?: string }>({});
 
 	//Function Validate
-	const validate = () => {
-		const newErrors: { staffId?: string; password?: string } = {};
+	// const validate = () => {
+	// 	const newErrors: { staffId?: string; password?: string } = {};
 
-		if (!staffId.trim()) {
-			newErrors.staffId = "សូមបញ្ចូលលេខសម្គាល់ NBC";
-		} else if (!/^[a-zA-Z0-9]+$/.test(staffId)) {
-			newErrors.staffId = "លេខសម្គាល់ NBC តំរូវជា លេខ";
-		} else if (staffId.length !== 4) {
-			newErrors.staffId = "លេខសម្គាល់ NBC ត្រូវមាន ៤ តួអក្សរ";
-		}
+	// 	if (!staffId.trim()) {
+	// 		newErrors.staffId = "សូមបញ្ចូលលេខសម្គាល់ NBC";
+	// 	} else if (!/^[a-zA-Z0-9]+$/.test(staffId)) {
+	// 		newErrors.staffId = "លេខសម្គាល់ NBC តំរូវជា លេខ";
+	// 	} else if (staffId.length !== 4) {
+	// 		newErrors.staffId = "លេខសម្គាល់ NBC ត្រូវមាន ៤ តួអក្សរ";
+	// 	}
 
-		if (!password.trim()) {
-			newErrors.password = "សូមបញ្ចូលលេខសម្ងាត់";
-		} else if (password.length < 6) {
-			newErrors.password = "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ ៦ តួអក្សរ";
-		}
+	// 	if (!password.trim()) {
+	// 		newErrors.password = "សូមបញ្ចូលលេខសម្ងាត់";
+	// 	} else if (password.length < 6) {
+	// 		newErrors.password = "ពាក្យសម្ងាត់ត្រូវមានយ៉ាងហោចណាស់ ៦ តួអក្សរ";
+	// 	}
 
-		setErrors(newErrors);
-		return Object.keys(newErrors).length === 0;
-	};
+	// 	setErrors(newErrors);
+	// 	return Object.keys(newErrors).length === 0;
+	// };
 
 	//Function Login
 	// const handleLogin = (e: React.FormEvent) => {
@@ -72,51 +74,58 @@ export default function LoginPage() {
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setErrors({});
 
-		if (!validate()) return;
+		const { valid, errors } = validateForm(
+			staffId,
+			password
+		);
+		setErrors(errors);
+		//console.log(errors,'error');
+		if (!valid) {
+			return;
+		}
 
 		try {
 			setIsLoading(true);
 
-			const response = await axios.post("http://172.16.9.80/auth/login", {
+			const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`,{
 				staff_id: staffId,
 				password: password,
 			});
 
-			const { message, token, user } = response.data;
-			console.log("Response data:", response.data); // Debug log
+			
+			//console.log("Response data:", response.data); // Debug log
 
-			if (message !== "Login successful" || !token || !user) {
-				setErrors({
-					staffId: "អ្នកប្រើប្រាស់មិនមានទេ",
-					password: "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
-				});
+			const token = response?.data?.data?.access_token;
+			const userId = response?.data?.data?.staff_id;
+			const userStatusCode = response?.data?.status?.code; // Get the user's status
+			const invalidCredentials = response?.data?.status?.message;
+			const userReqiureChangePwd = response?.data?.data?.status;
+
+			//check Invaild user
+			if (userStatusCode === 1) {
+				if (invalidCredentials === "Invalid email or password") {
+					setErrors({ staffId: "ពត៍មានមិនត្រឹមត្រូវ", password: "ពត៍មានមិនត្រឹមត្រូវ" });				}
 				return;
 			}
 
-			localStorage.setItem("authToken", token);
-			localStorage.setItem("userInfo", JSON.stringify(user));
+			//Set Toaken and Staff_is to local storage
+			setAcccessToken(token);
+			localStorage.setItem("staff_id",userId);
 
-			router.push("/change-password");
-
-		} catch (error: any) {
-			console.error("Login error:", error);
-
-			if (error.response) {
-				alert("កំហុសពីម៉ាស៊ីនមេ: " + (error.response.data.message || "មានបញ្ហា"));
-			} else if (error.request) {
-				alert("មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេបានទេ។ សូមពិនិត្យបណ្តាញរបស់អ្នក។");
-			} else {
-				alert("មានបញ្ហាមិនរំពឹងទុកកើតឡើង។ សូមសាកល្បងម្ដងទៀត។");
+			//check user required to change password or not
+			if(userReqiureChangePwd === 'UPDATE_PW_REQUIRED'){
+				router.push("/home");
+			}else{
+				router.push("/change-password");
 			}
-		} finally {
-			setIsLoading(false);
+
+		} catch (error) {
+			console.error("Login failed:", error);
+		}finally {
+			setIsLoading(false); // always reset loading no matter what
 		}
 	};
-
-
-
 
 	//check Tying
 	const hasTyped = staffId !== "" || password !== "";
