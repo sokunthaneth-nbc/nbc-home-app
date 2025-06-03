@@ -1,12 +1,13 @@
 'use client';
 import '../../styles/attendance.css';
 import { useEffect, useRef, useState, Fragment } from 'react';
+import { useRouter } from 'next/navigation';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { formatDate } from '@fullcalendar/core';
 import MobileBottomNav from '@/components/MobileBottomNav';
-import { formatDateToKhmer } from '../utils/khmerDate';
+import { khmerMonths, convertToKhmerNumber } from '../utils/khmerDate';
+import { getAccessToken } from "@/lib/auth";
 
 type AttendanceEvent = {
 	title: string;
@@ -16,22 +17,23 @@ type AttendanceEvent = {
 };
 
 export default function AttendancePage() {
-	const [attendanceData] = useState<AttendanceEvent[]>([
-		{ title: 'Present', date: '2025-05-28', checkIn: '08:00 AM', checkOut: '05:00 PM' },
-		{ title: 'Absent', date: '2025-05-27' },
-		{ title: 'Present', date: '2025-05-26', checkIn: '08:15 AM', checkOut: '04:55 PM' },
-		{ title: 'Present', date: '2025-05-29', checkIn: '08:15 AM', checkOut: '' },
-		{ title: 'Present', date: '2025-05-30', checkIn: '', checkOut: '04:55 PM' },
-		{ title: 'Present', date: new Date().toISOString().split('T')[0], checkIn: '06:55 AM', checkOut: '' },
-	]);
+	// const [attendanceData] = useState<AttendanceEvent[]>([
+	// 	{ title: 'Present', date: '2025-05-28', checkIn: '08:00 AM', checkOut: '05:00 PM' },
+	// 	{ title: 'Absent', date: '2025-05-27' },
+	// 	{ title: 'Present', date: '2025-05-26', checkIn: '08:15 AM', checkOut: '04:55 PM' },
+	// 	{ title: 'Present', date: '2025-05-29', checkIn: '08:15 AM', checkOut: '' },
+	// 	{ title: 'Present', date: '2025-05-30', checkIn: '', checkOut: '04:55 PM' },
+	// 	{ title: 'Present', date: new Date().toISOString().split('T')[0], checkIn: '06:55 AM', checkOut: '' },
+	// ]);
+	const router = useRouter();
 
 	const [selectedDateInfo, setSelectedDateInfo] = useState<AttendanceEvent[] | null>(null);
 	const calendarRef = useRef<FullCalendar | null>(null);
 
-	useEffect(() => {
-		const todayStr = new Date().toISOString().split('T')[0];
-		handleDateClick({ dateStr: todayStr });
-	}, []);
+	// useEffect(() => {
+	// 	const todayStr = new Date().toISOString().split('T')[0];
+	// 	handleDateClick({ dateStr: todayStr });
+	// }, []);
 
 	const handleDateClick = (arg: { dateStr: string }) => {
 		const selectedDate = new Date(arg.dateStr);
@@ -63,6 +65,58 @@ export default function AttendancePage() {
 		const weekday = date.toLocaleString('en-US', { weekday: 'short' }).toUpperCase();
 		return `${day} ${weekday}`;
 	}
+	const [attendance, setAttendance] = useState<any | null>(null);
+	// Fetch profile when component mounts
+	// 1. Fetch data
+	useEffect(() => {
+		const fetchAttendance = async () => {
+			const staff_id = localStorage.getItem("staff_id");
+			const token = getAccessToken();
+
+			if (!staff_id) {
+				router.push('/login');
+				return;
+			}
+			//Get Current Month
+			const currentMonth = new Date().toISOString().slice(0, 7); // e.g. "2025-06"
+
+			try {
+				const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/attendance`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({ staff_id: staff_id, date: currentMonth }),
+				});
+
+				if (!res.ok) throw new Error("Failed to fetch profile");
+
+				const data = await res.json();
+				setAttendance(data);
+			} catch (err) {
+				console.error("Profile fetch error:", err);
+			}
+		};
+
+		fetchAttendance();
+	}, [router]);
+
+	// 2. Respond to attendance data (e.g. highlight today's date)
+	useEffect(() => {
+		if (attendance) {
+			const todayStr = new Date().toISOString().split('T')[0];
+			handleDateClick({ dateStr: todayStr });
+		}
+	}, [attendance]);
+
+	const attendanceData: AttendanceEvent[] = attendance?.data?.map((data: any) => ({
+		title: 'Present', // Or 'Absent' if you have that logic
+		date: data.attendanceDate,
+		checkIn: data.checkInTime,
+		checkOut: data.checkOutTime
+	})) || [];
+
 
 	return (
 		<>
@@ -99,10 +153,13 @@ export default function AttendancePage() {
 							titleFormat={(arg) => {
 								const currentYear = new Date().getFullYear();
 								const viewYear = arg.date.marker.getFullYear();
-								return formatDateToKhmer(arg.date.marker, {
-									showDay: false,
-									showYear: viewYear !== currentYear,
-								});
+
+								const month = khmerMonths[arg.date.marker.getMonth()];
+								const year = viewYear !== currentYear
+									? convertToKhmerNumber(viewYear)
+									: '';
+
+								return `${month}${year ? ' ' + year : ''}`;
 							}}
 							firstDay={1}
 							dayMaxEventRows={2}

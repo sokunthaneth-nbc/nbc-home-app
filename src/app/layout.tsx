@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import "@/styles/globals.css";
 import { ToastProvider } from "@/components/ToastProvider";
 import RegisterServiceWorker from "@/components/RegisterServiceWorker";
-import { ThemeProvider } from 'next-themes';
+import { ThemeProvider } from "next-themes";
 
 const kantumruyPro = localFont({
 	src: "../../public/fonts/KantumruyPro-Regular.ttf",
@@ -25,16 +25,20 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" suppressHydrationWarning>
+		<html lang="en" suppressHydrationWarning={true}>
 			<head>
 				<link rel="manifest" href="/manifest.json" />
 				<meta name="theme-color" content="#ffffff" />
-				<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+				{/*Disable zooming on mobile */}
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+				/>
 			</head>
-			<body className={`${kantumruyPro.variable} antialiased`} >
+			<body className={`${kantumruyPro.variable} antialiased`}>
 				<ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
 					<RegisterServiceWorker />
-						{children}
+					{children}
 					<ToastProvider />
 				</ThemeProvider>
 			</body>
