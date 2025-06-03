@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.nbc_home_app.twa",
+      "sha256_cert_fingerprints": [
+        "F6:98:B6:28:26:E0:5A:35:5D:6F:6F:FA:0B:EA:49:31:CF:3A:02:75:09:70:94:31:5C:0A:5E:59:4A:CC:7E:4F"
+      ]
+    }
+  }
+]
