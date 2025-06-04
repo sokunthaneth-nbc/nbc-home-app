@@ -1,7 +1,7 @@
 // utils/khmerDate.ts
 
-const khmerDays = ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍'];
-const khmerMonths = [
+export  const khmerDays = ['អាទិត្យ', 'ចន្ទ', 'អង្គារ', 'ពុធ', 'ព្រហស្បតិ៍', 'សុក្រ', 'សៅរ៍'];
+export  const khmerMonths = [
   'មករា', 'កម្ភៈ', 'មិនា', 'មេសា', 'ឧសភា', 'មិថុនា',
   'កក្កដា', 'សីហា', 'កញ្ញា', 'តុលា', 'វិច្ឆិកា', 'ធ្នូ'
 ];
@@ -12,7 +12,7 @@ const khmerNumbers: Record<string, string> = {
 };
 
 // ✅ Updated: support leading zero
-const convertToKhmerNumber = (num: number, padLength: number = 0): string => {
+export const convertToKhmerNumber = (num: number, padLength: number = 0): string => {
   const padded = num.toString().padStart(padLength, '0');
   return padded.split('').map(d => khmerNumbers[d] || d).join('');
 };

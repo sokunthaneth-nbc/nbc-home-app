@@ -10,10 +10,14 @@ import { getAccessToken } from "@/lib/auth";
 
 export default function DashboardPage() {
 	const router = useRouter();
-	const today = new Date();
-  	const formattedDate = formatDateToKhmer(today,{ showDayName: true });
 	const [profile, setProfile] = useState<any | null>(null);
+	const [formattedDate, setFormattedDate] = useState('');
 
+	useEffect(() => {
+		const today = new Date();
+		setFormattedDate(formatDateToKhmer(today, { showDayName: true }));
+	}, []);
+	
 	const announcements = [
 		{
 			id: 1,
@@ -96,7 +100,11 @@ export default function DashboardPage() {
 						<p className="text-[23px] font-[600] text-[#001346] dark:text-white">
 							{profile?.data?.fullnameKh || 'កំពុងទាញទិន្នន័យ...'}
 						</p>
-						<p className="text-[13px] font-[400] text-[#001346] dark:text-white leading-normal">{formattedDate}</p>
+						{formattedDate && (
+							<p className="text-[13px] font-[400] text-[#001346] dark:text-white leading-normal">
+								{formattedDate}
+							</p>
+						)}
 					</div>
 				</div>
 
