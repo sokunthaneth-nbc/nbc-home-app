@@ -154,12 +154,8 @@ export default function LoginPage() {
 
   const handleVerifyPasskey = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Login !");
-
     const result = await verifyPasskey();
-
     if (result) {
-      alert("Login successfully!");
       router.push("/home");
     } else {
       // Switch to normal login
