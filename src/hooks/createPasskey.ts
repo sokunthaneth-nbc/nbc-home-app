@@ -41,11 +41,19 @@ export const defaultUser = {
         publicKey: publicKeyOptions,
       });
   
-      console.log("Passkey credential created:", credential);
+      // console.log("Passkey credential created:", credential);
       // call api send passkey credential created
       //   await registerCredentialToBackend(credential);
-
+      
+      // if (credential) {
+      //   const publicKeyCredential = credential as PublicKeyCredential;
+      //   const rawId = publicKeyCredential.rawId;
+      //   const base64Id = btoa(String.fromCharCode(...new Uint8Array(rawId)));
+      //   localStorage.setItem("credentialId", base64Id);
+      // }
       return credential;
+
+      
     } catch (err) {
       console.error("Error creating credential:", err);
       return null;

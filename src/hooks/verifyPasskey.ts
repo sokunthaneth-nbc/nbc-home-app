@@ -37,3 +37,48 @@ export async function verifyPasskey() {
     console.error("Error during login:", err);
   }
 }
+
+// export async function getPasskeyOnDeice() {
+//   const challenge = new Uint8Array([1, 2, 3, 4]);
+//   const publicKeyRequestOptions: PublicKeyCredentialRequestOptions = {
+//     challenge,
+//     timeout: 60000,
+//     userVerification: "preferred",
+//     allowCredentials: [],
+//   };
+
+//   try {
+//     const assertion = await navigator.credentials.get({
+//       publicKey: publicKeyRequestOptions,
+//       mediation: "silent",
+//     });
+//     console.log("getPasskeyOnDeice" + assertion);
+//     return assertion;
+//   } catch (err) {
+//     console.error("Error during login:", err);
+//   }
+// }
+
+
+export async function checkPasskeySilent() {
+  const credentialIdBase64 = localStorage.getItem("passkeyCredentialId");
+  if (!credentialIdBase64) return false;
+
+  const credentialId = Uint8Array.from(atob(credentialIdBase64), c => c.charCodeAt(0)).buffer;
+
+  try {
+    const result = await navigator.credentials.get({
+      publicKey: {
+        challenge: new Uint8Array([1, 2, 3, 4]), // You can use a real challenge from backend
+        allowCredentials: [{ id: credentialId, type: "public-key" }],
+        userVerification: "preferred",
+      },
+      mediation: "silent",
+    });
+
+    return !!result;
+  } catch (e) {
+    // console.log("Silent check failed:", e.name);
+    return false;
+  }
+}
