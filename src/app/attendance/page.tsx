@@ -100,7 +100,7 @@ export default function AttendancePage() {
 								const currentYear = new Date().getFullYear();
 								const viewYear = arg.date.marker.getFullYear();
 								return formatDateToKhmer(arg.date.marker, {
-									showDay: false,
+									showDayName: false,
 									showYear: viewYear !== currentYear,
 								});
 							}}
